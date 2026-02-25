@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍭 单词乐园 · 三至六年级全集 · 免费版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #b8e1ff 0%, #d4f0fd 100%);
+            font-family: 'Comic Neue', 'Chalkboard SE', 'Inter', system-ui, cursive, sans-serif;
+            min-height: 100vh;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 80% 20% 70% 30% / 30% 70% 20% 80%;
+            width: 200px;
+            height: 80px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .cloud1 { top: 20px; left: 10px; }
+        .cloud2 { bottom: 30px; right: 20px; width: 250px; height: 90px; }
+        .cloud3 { top: 40%; right: 5%; width: 180px; height: 70px; }
+
+        .register-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 241, 186, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        .register-card {
+            background: #fef9c3;
+            border-radius: 5rem;
+            padding: 3rem 4rem;
+            border: 10px solid #fbbf24;
+            box-shadow: 0 30px 0 #b45309, 0 40px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .register-card h2 {
+            font-size: 4rem;
+            color: #1e3a8a;
+            text-shadow: 4px 4px 0 #a5f3fc;
+            margin-bottom: 1rem;
+        }
+
+        .register-card p {
+            font-size: 2rem;
+            color: #854d0e;
+            margin-bottom: 2rem;
+        }
+
+        .register-input {
+            font-size: 2.5rem;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            border: 6px solid #f97316;
+            background: white;
+            width: 100%;
+            text-align: center;
+            font-family: inherit;
+            margin-bottom: 2rem;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .register-btn {
+            background: #f97316;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            padding: 1.5rem 3rem;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 6px solid #c2410c;
+            box-shadow: 0 12px 0 #9a3412;
+            transition: all 0.1s;
+            width: 100%;
+        }
+
+        .register-btn:hover {
+            transform: translateY(4px);
+            box-shadow: 0 8px 0 #9a3412;
+        }
+
+        .welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 215, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .welcome-card {
+            background: #fef9c3;
+            border-radius: 5rem;
+            padding: 3rem 5rem;
+            border: 12px solid #f97316;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s;
+        }
+
+        .welcome-card.show {
+            transform: scale(1);
+        }
+
+        .welcome-card h1 {
+            font-size: 5rem;
+            color: #1e3a8a;
+            text-shadow: 4px 4px 0 #a5f3fc;
+        }
+
+        .welcome-card p {
+            font-size: 3rem;
+            color: #7c2d12;
+        }
+
+        .praise-toast {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fde047;
+            border: 8px solid #eab308;
+            border-radius: 60px;
+            padding: 2rem 4rem;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #713f12;
+            text-align: center;
+            box-shadow: 0 20px 0 #b45309, 0 30px 30px rgba(0,0,0,0.2);
+            z-index: 3000;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .app {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 4rem 4rem 3rem 3rem;
+            box-shadow: 0 30px 40px -15px rgba(0, 80, 200, 0.4);
+            overflow: hidden;
+            padding: 2rem 2rem 3rem;
+            border: 5px solid white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #f97316, #c026d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 4px 4px 0 #ffeaa5;
+            margin-bottom: 0.2rem;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            color: #0369a1;
+            background: #fffbeb;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 4px 0 #fbbf24;
+            font-weight: 600;
+        }
+
+        .grade-nav {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .grade-btn {
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            border: 4px solid #f97316;
+            background: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7c2d12;
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 #b45309;
+        }
+
+        .grade-btn.active {
+            background: #f97316;
+            color: white;
+            border-color: #7c2d12;
+            box-shadow: 0 4px 0 #7c2d12;
+            transform: translateY(2px);
+        }
+
+        .nav-container {
+            background: #fef9c3;
+            border-radius: 60px;
+            padding: 1rem 1.8rem;
+            margin-bottom: 2rem;
+            border: 4px solid #facc15;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 0 #ca8a04;
+        }
+
+        .nav-level {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-label {
+            font-weight: 700;
+            color: #854d0e;
+            font-size: 1.2rem;
+            background: #ffedd5;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .semester-btn, .unit-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 3px solid #f97316;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #7c2d12;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #b45309;
+        }
+
+        .semester-btn.active, .unit-btn.active {
+            background: #f97316;
+            color: white;
+            border-color: #7c2d12;
+            box-shadow: 0 4px 0 #7c2d12;
+            transform: translateY(2px);
+        }
+
+        .separator {
+            color: #f97316;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-item {
+            background: #f0f9ff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            color: #075985;
+            border: 3px solid #38bdf8;
+            box-shadow: 0 5px 0 #0284c7;
+            font-weight: 600;
+        }
+
+        .stat-item span {
+            font-weight: 800;
+            color: #e11d48;
+            margin-right: 0.3rem;
+            background: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        .total-stars {
+            background: #fff7ed;
+            border-color: #fbbf24;
+        }
+        .total-stars span { color: #b45309; }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            border-left: 12px solid #f97316;
+            padding-left: 1.5rem;
+            color: #1e3a8a;
+            text-shadow: 2px 2px 0 #a5f3fc;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .word-card {
+            background: #fefce8;
+            border: 5px solid #fcd34d;
+            border-radius: 2.5rem;
+            padding: 1.5rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 12px 0 #b45309;
+            position: relative;
+        }
+
+        .word-card.completed {
+            background: #d9f99d;
+            border-color: #4d7c0f;
+            box-shadow: 0 12px 0 #3f6212;
+        }
+
+        .word-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 0 #b45309;
+        }
+
+        .word-card .word {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.3rem;
+        }
+
+        .word-card .meaning {
+            color: #475569;
+            font-size: 1.2rem;
+            background: #fef9c3;
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            border: 2px solid #fbbf24;
+        }
+
+        .star-icon {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2.5rem;
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.2));
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal {
+            background: #fffbeb;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 4rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 30px 40px -10px #334155, 0 15px 0 #b45309;
+            border: 8px solid #fcd34d;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.8rem;
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #b91c1c;
+            line-height: 1;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #b91c1c;
+        }
+
+        .modal-close:hover {
+            background: #fecaca;
+        }
+
+        .modal-word-area {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.5rem;
+            margin-bottom: 1rem;
+            background: #fef9c3;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            border: 4px solid #fbbf24;
+        }
+
+        .modal-word {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .modal-phonetic {
+            font-size: 1.8rem;
+            color: #475569;
+            font-family: 'Courier New', monospace;
+            background: #e2e8f0;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+        }
+
+        .sound-btn {
+            background: #38bdf8;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 4px solid #0284c7;
+            box-shadow: 0 6px 0 #0369a1;
+            font-weight: 600;
+        }
+
+        .sound-btn:hover {
+            background: #7dd3fc;
+        }
+
+        .modal-section {
+            margin: 2rem 0 1.5rem;
+            background: #e0f2fe;
+            padding: 1.5rem;
+            border-radius: 2.5rem;
+            border: 4px solid #38bdf8;
+        }
+
+        .modal-section h4 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-section p, .modal-section li {
+            color: #0f172a;
+            background: #f8fafc;
+            padding: 0.8rem 1.5rem;
+            border-radius: 1.8rem;
+            margin-bottom: 0.6rem;
+            border: 2px solid #7dd3fc;
+            font-size: 1.2rem;
+        }
+
+        .modal-section ul {
+            list-style: none;
+        }
+
+        .game-area {
+            background: #fef08a;
+            border-radius: 2.5rem;
+            padding: 1.8rem;
+            border: 6px solid #eab308;
+            margin-top: 2rem;
+        }
+
+        .game-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #854d0e;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border: 3px solid #f97316;
+        }
+
+        .question p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #7c2d12;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .option-btn {
+            background: #ffedd5;
+            border: 3px solid #fb923c;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #7b341e;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 5px 0 #c2410c;
+        }
+
+        .option-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .feedback {
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 60px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .next-btn {
+            background: #f97316;
+            color: white;
+            border: none;
+            font-size: 1.6rem;
+            padding: 1rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 1.5rem auto 0;
+            display: block;
+            border: 4px solid #c2410c;
+            box-shadow: 0 8px 0 #9a3412;
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .game-complete {
+            background: #fde047;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #713f12;
+            border: 5px solid #eab308;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 3rem;
+            color: #075985;
+            font-size: 1.2rem;
+            border-top: 4px dashed #38bdf8;
+            padding-top: 2rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .app { padding: 1rem; }
+            .modal { padding: 1.5rem; }
+            .modal-word { font-size: 2.5rem; }
+            .register-card { padding: 2rem; }
+            .register-card h2 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <!-- 注册页面 -->
+    <div class="register-overlay" id="registerOverlay">
+        <div class="register-card">
+            <h2>🎈 单词乐园</h2>
+            <p>小勇士，你叫什么名字？</p>
+            <input type="text" class="register-input" id="playerNameInput" placeholder="输入你的名字" maxlength="20">
+            <button class="register-btn" id="startBtn">开始冒险 🚀</button>
+        </div>
+    </div>
+
+    <!-- 欢迎动画 -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card" id="welcomeCard">
+            <h1>👋 欢迎</h1>
+            <p id="welcomeMessage"></p>
+        </div>
+    </div>
+
+    <!-- 表扬弹窗 -->
+    <div class="praise-toast" id="praiseToast"></div>
+
+    <!-- 主应用 -->
+    <div class="app" id="mainApp" style="display: none;">
+        <div class="header">
+            <h1>🍭 单词乐园 · 三至六年级全集</h1>
+            <p>人教版PEP · 全部免费开放 ✨</p>
+        </div>
+
+        <!-- 年级选择器 -->
+        <div class="grade-nav" id="gradeNav">
+            <button class="grade-btn" data-grade="grade3">三年级</button>
+            <button class="grade-btn" data-grade="grade4">四年级</button>
+            <button class="grade-btn" data-grade="grade5">五年级</button>
+            <button class="grade-btn active" data-grade="grade6">六年级</button>
+        </div>
+
+        <!-- 学期/单元导航 -->
+        <div class="nav-container">
+            <div class="nav-level">
+                <span class="nav-label">📅 学期</span>
+                <div class="nav-buttons" id="semesterNav">
+                    <button class="semester-btn active" data-semester="a">上册 🍂</button>
+                    <button class="semester-btn" data-semester="b">下册 🌸</button>
+                </div>
+            </div>
+            <div class="separator">›</div>
+            <div class="nav-level">
+                <span class="nav-label">📚 单元</span>
+                <div class="nav-buttons" id="unitNav"></div>
+            </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats">
+            <div class="stat-item total-stars">⭐ 已收集 <span id="totalStars">0</span> 颗星星</div>
+            <div class="stat-item"><span id="unitName">六年级上册 Unit 1</span></div>
+            <div class="stat-item">📖 单词 <span id="wordCount">0</span> 个</div>
+        </div>
+
+        <!-- 单词卡片网格 -->
+        <h2 class="section-title">🔤 点开单词开始闯关 👆</h2>
+        <div class="card-grid" id="wordCardGrid"></div>
+
+        <div class="footer-note">
+            ✨ 每个单词都有三个小关卡，全部答对就能收集星星！✨
+        </div>
+    </div>
+
+    <!-- 单词详情模态框 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" id="closeModalBtn">✖</button>
+            <div id="modalInner"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 三至六年级完整词汇数据 ====================
+
+        // ---------- 三年级数据 ----------
+        const grade3Data = {
+            a: { // 上册
+                unit1: { name: "Unit 1 Hello!", words: [
+                    { word: "pen", phonetic: "/pen/", meaning: "钢笔", usage: "a pen — 一支钢笔", grammar: "可数名词，复数pens", examples: ["I have a pen.", "This is my pen."] },
+                    { word: "pencil", phonetic: "/ˈpensl/", meaning: "铅笔", usage: "pencil case 铅笔盒", grammar: "可数名词", examples: ["My pencil is blue."] },
+                    { word: "book", phonetic: "/bʊk/", meaning: "书", usage: "read a book 看书", grammar: "可数名词", examples: ["Open your book."] },
+                    { word: "ruler", phonetic: "/ˈruːlər/", meaning: "尺子", usage: "a long ruler", grammar: "可数名词", examples: ["I need a ruler."] },
+                    { word: "eraser", phonetic: "/ɪˈreɪsər/", meaning: "橡皮", usage: "an eraser", grammar: "可数名词", examples: ["My eraser is small."] },
+                    { word: "crayon", phonetic: "/ˈkreɪən/", meaning: "蜡笔", usage: "color with crayons", grammar: "可数名词", examples: ["I have 12 crayons."] },
+                    { word: "bag", phonetic: "/bæɡ/", meaning: "书包", usage: "school bag", grammar: "可数名词", examples: ["My bag is heavy."] },
+                    { word: "sharpener", phonetic: "/ˈʃɑːrpənər/", meaning: "卷笔刀", usage: "pencil sharpener", grammar: "可数名词", examples: ["Use the sharpener."] },
+                    { word: "no", phonetic: "/noʊ/", meaning: "不", usage: "say no", grammar: "副词/感叹词", examples: ["No, it's not."] },
+                    { word: "your", phonetic: "/jɔːr/", meaning: "你的", usage: "your book", grammar: "形容词性物主代词", examples: ["Is this your pencil?"] }
+                ]},
+                unit2: { name: "Unit 2 Colours", words: [
+                    { word: "red", phonetic: "/red/", meaning: "红色", usage: "a red apple", grammar: "形容词/名词", examples: ["I like red."] },
+                    { word: "yellow", phonetic: "/ˈjeloʊ/", meaning: "黄色", usage: "yellow flower", grammar: "形容词", examples: ["The sun is yellow."] },
+                    { word: "green", phonetic: "/ɡriːn/", meaning: "绿色", usage: "green grass", grammar: "形容词", examples: ["Trees are green."] },
+                    { word: "blue", phonetic: "/bluː/", meaning: "蓝色", usage: "blue sky", grammar: "形容词", examples: ["The sky is blue."] },
+                    { word: "black", phonetic: "/blæk/", meaning: "黑色", usage: "black cat", grammar: "形容词", examples: ["I have a black pen."] },
+                    { word: "brown", phonetic: "/braʊn/", meaning: "棕色", usage: "brown dog", grammar: "形容词", examples: ["My dog is brown."] },
+                    { word: "white", phonetic: "/waɪt/", meaning: "白色", usage: "white paper", grammar: "形容词", examples: ["Snow is white."] },
+                    { word: "orange", phonetic: "/ˈɔːrɪndʒ/", meaning: "橙色", usage: "orange juice", grammar: "形容词/名词", examples: ["I like orange."] },
+                    { word: "pink", phonetic: "/pɪŋk/", meaning: "粉色", usage: "pink flower", grammar: "形容词", examples: ["The flower is pink."] },
+                    { word: "purple", phonetic: "/ˈpɜːrpl/", meaning: "紫色", usage: "purple grapes", grammar: "形容词", examples: ["I like purple."] }
+                ]},
+                unit3: { name: "Unit 3 Look at me!", words: [
+                    { word: "face", phonetic: "/feɪs/", meaning: "脸", usage: "wash your face", grammar: "可数名词", examples: ["This is my face."] },
+                    { word: "ear", phonetic: "/ɪr/", meaning: "耳朵", usage: "big ears", grammar: "可数名词", examples: ["Elephants have big ears."] },
+                    { word: "eye", phonetic: "/aɪ/", meaning: "眼睛", usage: "close your eyes", grammar: "可数名词", examples: ["She has blue eyes."] },
+                    { word: "nose", phonetic: "/noʊz/", meaning: "鼻子", usage: "long nose", grammar: "可数名词", examples: ["Touch your nose."] },
+                    { word: "mouth", phonetic: "/maʊθ/", meaning: "嘴巴", usage: "open your mouth", grammar: "可数名词", examples: ["This is my mouth."] },
+                    { word: "arm", phonetic: "/ɑːrm/", meaning: "胳膊", usage: "raise your arm", grammar: "可数名词", examples: ["My arm is long."] },
+                    { word: "hand", phonetic: "/hænd/", meaning: "手", usage: "wash hands", grammar: "可数名词", examples: ["I have two hands."] },
+                    { word: "head", phonetic: "/hed/", meaning: "头", usage: "nod your head", grammar: "可数名词", examples: ["My head hurts."] },
+                    { word: "body", phonetic: "/ˈbɑːdi/", meaning: "身体", usage: "body parts", grammar: "可数名词", examples: ["This is my body."] },
+                    { word: "leg", phonetic: "/leɡ/", meaning: "腿", usage: "long legs", grammar: "可数名词", examples: ["My legs are strong."] },
+                    { word: "foot", phonetic: "/fʊt/", meaning: "脚", usage: "feet(复数)", grammar: "可数名词，复数feet", examples: ["I hurt my foot."] }
+                ]},
+                unit4: { name: "Unit 4 We love animals", words: [
+                    { word: "cat", phonetic: "/kæt/", meaning: "猫", usage: "a cute cat", grammar: "可数名词", examples: ["I have a cat."] },
+                    { word: "dog", phonetic: "/dɔːɡ/", meaning: "狗", usage: "walk the dog", grammar: "可数名词", examples: ["My dog is friendly."] },
+                    { word: "duck", phonetic: "/dʌk/", meaning: "鸭子", usage: "yellow duck", grammar: "可数名词", examples: ["Ducks can swim."] },
+                    { word: "pig", phonetic: "/pɪɡ/", meaning: "猪", usage: "a fat pig", grammar: "可数名词", examples: ["The pig is pink."] },
+                    { word: "bear", phonetic: "/ber/", meaning: "熊", usage: "brown bear", grammar: "可数名词", examples: ["Bears are big."] },
+                    { word: "elephant", phonetic: "/ˈelɪfənt/", meaning: "大象", usage: "a big elephant", grammar: "可数名词", examples: ["Elephants have long noses."] },
+                    { word: "monkey", phonetic: "/ˈmʌŋki/", meaning: "猴子", usage: "a clever monkey", grammar: "可数名词", examples: ["Monkeys like bananas."] },
+                    { word: "bird", phonetic: "/bɜːrd/", meaning: "鸟", usage: "a little bird", grammar: "可数名词", examples: ["The bird can fly."] },
+                    { word: "tiger", phonetic: "/ˈtaɪɡər/", meaning: "老虎", usage: "a scary tiger", grammar: "可数名词", examples: ["Tigers are orange and black."] },
+                    { word: "panda", phonetic: "/ˈpændə/", meaning: "熊猫", usage: "cute panda", grammar: "可数名词", examples: ["Pandas are from China."] },
+                    { word: "zoo", phonetic: "/zuː/", meaning: "动物园", usage: "go to the zoo", grammar: "可数名词", examples: ["Let's go to the zoo."] }
+                ]},
+                unit5: { name: "Unit 5 Let's eat!", words: [
+                    { word: "cake", phonetic: "/keɪk/", meaning: "蛋糕", usage: "birthday cake", grammar: "可数名词", examples: ["I like cake."] },
+                    { word: "bread", phonetic: "/bred/", meaning: "面包", usage: "a piece of bread", grammar: "不可数名词", examples: ["I have bread for breakfast."] },
+                    { word: "juice", phonetic: "/dʒuːs/", meaning: "果汁", usage: "apple juice", grammar: "不可数名词", examples: ["I drink juice."] },
+                    { word: "milk", phonetic: "/mɪlk/", meaning: "牛奶", usage: "drink milk", grammar: "不可数名词", examples: ["Milk is good for you."] },
+                    { word: "water", phonetic: "/ˈwɔːtər/", meaning: "水", usage: "drink water", grammar: "不可数名词", examples: ["We need water."] },
+                    { word: "fish", phonetic: "/fɪʃ/", meaning: "鱼", usage: "eat fish", grammar: "可数/不可数", examples: ["I like fish."] },
+                    { word: "rice", phonetic: "/raɪs/", meaning: "米饭", usage: "eat rice", grammar: "不可数名词", examples: ["I have rice for lunch."] },
+                    { word: "egg", phonetic: "/eɡ/", meaning: "鸡蛋", usage: "eat eggs", grammar: "可数名词", examples: ["I have an egg."] },
+                    { word: "chicken", phonetic: "/ˈtʃɪkɪn/", meaning: "鸡肉", usage: "fried chicken", grammar: "不可数名词", examples: ["I like chicken."] },
+                    { word: "hamburger", phonetic: "/ˈhæmbɜːrɡər/", meaning: "汉堡包", usage: "a hamburger", grammar: "可数名词", examples: ["Children like hamburgers."] }
+                ]},
+                unit6: { name: "Unit 6 Happy birthday!", words: [
+                    { word: "one", phonetic: "/wʌn/", meaning: "一", usage: "one apple", grammar: "数词", examples: ["I have one brother."] },
+                    { word: "two", phonetic: "/tuː/", meaning: "二", usage: "two books", grammar: "数词", examples: ["I have two eyes."] },
+                    { word: "three", phonetic: "/θriː/", meaning: "三", usage: "three pens", grammar: "数词", examples: ["I am three years old."] },
+                    { word: "four", phonetic: "/fɔːr/", meaning: "四", usage: "four cats", grammar: "数词", examples: ["There are four seasons."] },
+                    { word: "five", phonetic: "/faɪv/", meaning: "五", usage: "five fingers", grammar: "数词", examples: ["I have five books."] },
+                    { word: "six", phonetic: "/sɪks/", meaning: "六", usage: "six dogs", grammar: "数词", examples: ["I am six years old."] },
+                    { word: "seven", phonetic: "/ˈsevn/", meaning: "七", usage: "seven days", grammar: "数词", examples: ["There are seven days in a week."] },
+                    { word: "eight", phonetic: "/eɪt/", meaning: "八", usage: "eight apples", grammar: "数词", examples: ["I have eight crayons."] },
+                    { word: "nine", phonetic: "/naɪn/", meaning: "九", usage: "nine cats", grammar: "数词", examples: ["I am nine years old."] },
+                    { word: "ten", phonetic: "/ten/", meaning: "十", usage: "ten fingers", grammar: "数词", examples: ["I have ten fingers."] },
+                    { word: "brother", phonetic: "/ˈbrʌðər/", meaning: "兄弟", usage: "my brother", grammar: "可数名词", examples: ["I have a brother."] },
+                    { word: "sister", phonetic: "/ˈsɪstər/", meaning: "姐妹", usage: "my sister", grammar: "可数名词", examples: ["My sister is cute."] }
+                ]}
+            },
+            b: { // 下册
+                unit1: { name: "Unit 1 Welcome back to school!", words: [
+                    { word: "UK", phonetic: "/ˌjuː ˈkeɪ/", meaning: "英国", usage: "from the UK", grammar: "缩写", examples: ["He is from the UK."] },
+                    { word: "Canada", phonetic: "/ˈkænədə/", meaning: "加拿大", usage: "in Canada", grammar: "国家名", examples: ["She is from Canada."] },
+                    { word: "USA", phonetic: "/ˌjuː es ˈeɪ/", meaning: "美国", usage: "the USA", grammar: "缩写", examples: ["I am from the USA."] },
+                    { word: "China", phonetic: "/ˈtʃaɪnə/", meaning: "中国", usage: "in China", grammar: "国家名", examples: ["We are from China."] },
+                    { word: "student", phonetic: "/ˈstuːdnt/", meaning: "学生", usage: "a good student", grammar: "可数名词", examples: ["I am a student."] },
+                    { word: "pupil", phonetic: "/ˈpjuːpl/", meaning: "小学生", usage: "a primary pupil", grammar: "可数名词", examples: ["He is a pupil."] },
+                    { word: "teacher", phonetic: "/ˈtiːtʃər/", meaning: "老师", usage: "my teacher", grammar: "可数名词", examples: ["My teacher is nice."] },
+                    { word: "boy", phonetic: "/bɔɪ/", meaning: "男孩", usage: "a tall boy", grammar: "可数名词", examples: ["The boy is playing."] },
+                    { word: "girl", phonetic: "/ɡɜːrl/", meaning: "女孩", usage: "a pretty girl", grammar: "可数名词", examples: ["She is a girl."] },
+                    { word: "new", phonetic: "/nuː/", meaning: "新的", usage: "new friend", grammar: "形容词", examples: ["I have a new book."] },
+                    { word: "friend", phonetic: "/frend/", meaning: "朋友", usage: "best friend", grammar: "可数名词", examples: ["We are friends."] },
+                    { word: "today", phonetic: "/təˈdeɪ/", meaning: "今天", usage: "today is...", grammar: "副词/名词", examples: ["Today is Monday."] }
+                ]},
+                unit2: { name: "Unit 2 My family", words: [
+                    { word: "father", phonetic: "/ˈfɑːðər/", meaning: "父亲", usage: "my father", grammar: "可数名词", examples: ["My father is a doctor."] },
+                    { word: "mother", phonetic: "/ˈmʌðər/", meaning: "母亲", usage: "my mother", grammar: "可数名词", examples: ["I love my mother."] },
+                    { word: "man", phonetic: "/mæn/", meaning: "男人", usage: "a tall man", grammar: "可数名词", examples: ["The man is my uncle."] },
+                    { word: "woman", phonetic: "/ˈwʊmən/", meaning: "女人", usage: "a beautiful woman", grammar: "可数名词", examples: ["She is a woman."] },
+                    { word: "grandma", phonetic: "/ˈɡrænmɑː/", meaning: "奶奶/外婆", usage: "my grandma", grammar: "可数名词", examples: ["My grandma is kind."] },
+                    { word: "grandpa", phonetic: "/ˈɡrænpɑː/", meaning: "爷爷/外公", usage: "my grandpa", grammar: "可数名词", examples: ["My grandpa is old."] },
+                    { word: "sister", phonetic: "/ˈsɪstər/", meaning: "姐妹", usage: "my sister", grammar: "可数名词", examples: ["I have a sister."] },
+                    { word: "brother", phonetic: "/ˈbrʌðər/", meaning: "兄弟", usage: "my brother", grammar: "可数名词", examples: ["My brother is tall."] },
+                    { word: "family", phonetic: "/ˈfæməli/", meaning: "家庭", usage: "my family", grammar: "可数名词", examples: ["This is my family."] },
+                    { word: "love", phonetic: "/lʌv/", meaning: "爱", usage: "love my family", grammar: "动词", examples: ["I love you."] }
+                ]},
+                unit3: { name: "Unit 3 At the zoo", words: [
+                    { word: "tall", phonetic: "/tɔːl/", meaning: "高的", usage: "tall tree", grammar: "形容词", examples: ["The giraffe is tall."] },
+                    { word: "short", phonetic: "/ʃɔːrt/", meaning: "矮的", usage: "short boy", grammar: "形容词", examples: ["My brother is short."] },
+                    { word: "fat", phonetic: "/fæt/", meaning: "胖的", usage: "fat cat", grammar: "形容词", examples: ["The cat is fat."] },
+                    { word: "thin", phonetic: "/θɪn/", meaning: "瘦的", usage: "thin girl", grammar: "形容词", examples: ["She is thin."] },
+                    { word: "big", phonetic: "/bɪɡ/", meaning: "大的", usage: "big elephant", grammar: "形容词", examples: ["The elephant is big."] },
+                    { word: "small", phonetic: "/smɔːl/", meaning: "小的", usage: "small mouse", grammar: "形容词", examples: ["The mouse is small."] },
+                    { word: "long", phonetic: "/lɔːŋ/", meaning: "长的", usage: "long tail", grammar: "形容词", examples: ["The monkey has a long tail."] },
+                    { word: "short", phonetic: "/ʃɔːrt/", meaning: "短的", usage: "short hair", grammar: "形容词", examples: ["She has short hair."] },
+                    { word: "giraffe", phonetic: "/dʒəˈræf/", meaning: "长颈鹿", usage: "tall giraffe", grammar: "可数名词", examples: ["The giraffe is eating."] },
+                    { word: "deer", phonetic: "/dɪr/", meaning: "鹿", usage: "a deer", grammar: "可数名词(单复数同)", examples: ["Look at the deer."] }
+                ]},
+                unit4: { name: "Unit 4 Where is my car?", words: [
+                    { word: "on", phonetic: "/ɑːn/", meaning: "在...上面", usage: "on the desk", grammar: "介词", examples: ["The book is on the desk."] },
+                    { word: "in", phonetic: "/ɪn/", meaning: "在...里面", usage: "in the box", grammar: "介词", examples: ["The pen is in the pencil case."] },
+                    { word: "under", phonetic: "/ˈʌndər/", meaning: "在...下面", usage: "under the chair", grammar: "介词", examples: ["The cat is under the chair."] },
+                    { word: "chair", phonetic: "/tʃer/", meaning: "椅子", usage: "sit on the chair", grammar: "可数名词", examples: ["This is my chair."] },
+                    { word: "desk", phonetic: "/desk/", meaning: "书桌", usage: "on the desk", grammar: "可数名词", examples: ["My computer is on the desk."] },
+                    { word: "cap", phonetic: "/kæp/", meaning: "帽子", usage: "a red cap", grammar: "可数名词", examples: ["He wears a cap."] },
+                    { word: "ball", phonetic: "/bɔːl/", meaning: "球", usage: "play ball", grammar: "可数名词", examples: ["I have a ball."] },
+                    { word: "car", phonetic: "/kɑːr/", meaning: "小汽车", usage: "toy car", grammar: "可数名词", examples: ["My brother has a toy car."] },
+                    { word: "boat", phonetic: "/boʊt/", meaning: "船", usage: "a boat", grammar: "可数名词", examples: ["Let's go by boat."] },
+                    { word: "map", phonetic: "/mæp/", meaning: "地图", usage: "on the map", grammar: "可数名词", examples: ["Look at the map."] },
+                    { word: "toy", phonetic: "/tɔɪ/", meaning: "玩具", usage: "toy box", grammar: "可数名词", examples: ["I have many toys."] },
+                    { word: "box", phonetic: "/bɑːks/", meaning: "盒子", usage: "a small box", grammar: "可数名词", examples: ["Put it in the box."] }
+                ]},
+                unit5: { name: "Unit 5 Do you like pears?", words: [
+                    { word: "apple", phonetic: "/ˈæpl/", meaning: "苹果", usage: "eat an apple", grammar: "可数名词", examples: ["An apple a day keeps the doctor away."] },
+                    { word: "pear", phonetic: "/per/", meaning: "梨", usage: "a sweet pear", grammar: "可数名词", examples: ["I like pears."] },
+                    { word: "orange", phonetic: "/ˈɔːrɪndʒ/", meaning: "橙子", usage: "orange juice", grammar: "可数名词", examples: ["I have an orange."] },
+                    { word: "banana", phonetic: "/bəˈnænə/", meaning: "香蕉", usage: "a yellow banana", grammar: "可数名词", examples: ["Monkeys like bananas."] },
+                    { word: "grape", phonetic: "/ɡreɪp/", meaning: "葡萄", usage: "eat grapes", grammar: "可数名词", examples: ["These grapes are sweet."] },
+                    { word: "watermelon", phonetic: "/ˈwɔːtərmelən/", meaning: "西瓜", usage: "a slice of watermelon", grammar: "可数名词", examples: ["Watermelon is juicy."] },
+                    { word: "strawberry", phonetic: "/ˈstrɔːberi/", meaning: "草莓", usage: "fresh strawberries", grammar: "可数名词", examples: ["I like strawberries."] },
+                    { word: "fruit", phonetic: "/fruːt/", meaning: "水果", usage: "eat fruit", grammar: "不可数名词", examples: ["Fruit is healthy."] },
+                    { word: "like", phonetic: "/laɪk/", meaning: "喜欢", usage: "like apples", grammar: "动词", examples: ["I like bananas."] },
+                    { word: "buy", phonetic: "/baɪ/", meaning: "买", usage: "buy fruit", grammar: "动词", examples: ["Let's buy some apples."] }
+                ]},
+                unit6: { name: "Unit 6 How many?", words: [
+                    { word: "eleven", phonetic: "/ɪˈlevn/", meaning: "十一", usage: "eleven apples", grammar: "数词", examples: ["I have eleven books."] },
+                    { word: "twelve", phonetic: "/twelv/", meaning: "十二", usage: "twelve eggs", grammar: "数词", examples: ["There are twelve months."] },
+                    { word: "thirteen", phonetic: "/ˌθɜːrˈtiːn/", meaning: "十三", usage: "thirteen pens", grammar: "数词", examples: ["I am thirteen years old."] },
+                    { word: "fourteen", phonetic: "/ˌfɔːrˈtiːn/", meaning: "十四", usage: "fourteen girls", grammar: "数词", examples: ["We have fourteen students."] },
+                    { word: "fifteen", phonetic: "/ˌfɪfˈtiːn/", meaning: "十五", usage: "fifteen birds", grammar: "数词", examples: ["I see fifteen birds."] },
+                    { word: "sixteen", phonetic: "/ˌsɪksˈtiːn/", meaning: "十六", usage: "sixteen crayons", grammar: "数词", examples: ["I have sixteen crayons."] },
+                    { word: "seventeen", phonetic: "/ˌsevnˈtiːn/", meaning: "十七", usage: "seventeen books", grammar: "数词", examples: ["There are seventeen students."] },
+                    { word: "eighteen", phonetic: "/ˌeɪˈtiːn/", meaning: "十八", usage: "eighteen toys", grammar: "数词", examples: ["I have eighteen toys."] },
+                    { word: "nineteen", phonetic: "/ˌnaɪnˈtiːn/", meaning: "十九", usage: "nineteen balloons", grammar: "数词", examples: ["We have nineteen balloons."] },
+                    { word: "twenty", phonetic: "/ˈtwenti/", meaning: "二十", usage: "twenty fingers", grammar: "数词", examples: ["I have twenty fingers and toes."] },
+                    { word: "kite", phonetic: "/kaɪt/", meaning: "风筝", usage: "fly a kite", grammar: "可数名词", examples: ["Let's fly a kite."] },
+                    { word: "beautiful", phonetic: "/ˈbjuːtɪfl/", meaning: "美丽的", usage: "beautiful kite", grammar: "形容词", examples: ["What a beautiful kite!"] }
+                ]}
+            }
+        };
+
+        // ---------- 四年级数据 ----------
+        const grade4Data = {
+            a: { // 上册
+                unit1: { name: "Unit 1 My classroom", words: [
+                    { word: "classroom", phonetic: "/ˈklæsruːm/", meaning: "教室", usage: "in the classroom", grammar: "可数名词", examples: ["Our classroom is big."] },
+                    { word: "window", phonetic: "/ˈwɪndoʊ/", meaning: "窗户", usage: "open the window", grammar: "可数名词", examples: ["Please open the window."] },
+                    { word: "door", phonetic: "/dɔːr/", meaning: "门", usage: "close the door", grammar: "可数名词", examples: ["Close the door, please."] },
+                    { word: "picture", phonetic: "/ˈpɪktʃər/", meaning: "图画", usage: "draw a picture", grammar: "可数名词", examples: ["The picture is beautiful."] },
+                    { word: "light", phonetic: "/laɪt/", meaning: "灯", usage: "turn on the light", grammar: "可数名词", examples: ["Turn off the light."] },
+                    { word: "board", phonetic: "/bɔːrd/", meaning: "黑板", usage: "on the board", grammar: "可数名词", examples: ["Look at the board."] },
+                    { word: "floor", phonetic: "/flɔːr/", meaning: "地板", usage: "clean the floor", grammar: "可数名词", examples: ["The floor is dirty."] },
+                    { word: "wall", phonetic: "/wɔːl/", meaning: "墙", usage: "on the wall", grammar: "可数名词", examples: ["The map is on the wall."] },
+                    { word: "teacher's desk", phonetic: "/ˈtiːtʃərz desk/", meaning: "讲台", usage: "on the teacher's desk", grammar: "名词短语", examples: ["The book is on the teacher's desk."] },
+                    { word: "fan", phonetic: "/fæn/", meaning: "风扇", usage: "turn on the fan", grammar: "可数名词", examples: ["The fan is spinning."] },
+                    { word: "computer", phonetic: "/kəmˈpjuːtər/", meaning: "电脑", usage: "use the computer", grammar: "可数名词", examples: ["Our classroom has a computer."] }
+                ]},
+                unit2: { name: "Unit 2 My schoolbag", words: [
+                    { word: "schoolbag", phonetic: "/ˈskuːlbæɡ/", meaning: "书包", usage: "heavy schoolbag", grammar: "可数名词", examples: ["My schoolbag is blue."] },
+                    { word: "maths book", phonetic: "/mæθs bʊk/", meaning: "数学书", usage: "read maths book", grammar: "名词短语", examples: ["I have a maths book."] },
+                    { word: "English book", phonetic: "/ˈɪŋɡlɪʃ bʊk/", meaning: "英语书", usage: "open English book", grammar: "名词短语", examples: ["This is my English book."] },
+                    { word: "Chinese book", phonetic: "/ˌtʃaɪˈniːz bʊk/", meaning: "语文书", usage: "read Chinese book", grammar: "名词短语", examples: ["I like Chinese book."] },
+                    { word: "storybook", phonetic: "/ˈstɔːribʊk/", meaning: "故事书", usage: "read a storybook", grammar: "可数名词", examples: ["I have a storybook."] },
+                    { word: "notebook", phonetic: "/ˈnoʊtbʊk/", meaning: "笔记本", usage: "write in notebook", grammar: "可数名词", examples: ["My notebook is new."] },
+                    { word: "pencil box", phonetic: "/ˈpensl bɑːks/", meaning: "铅笔盒", usage: "put pencils in pencil box", grammar: "名词短语", examples: ["My pencil box is pink."] },
+                    { word: "toy", phonetic: "/tɔɪ/", meaning: "玩具", usage: "toy car", grammar: "可数名词", examples: ["I have many toys."] },
+                    { word: "key", phonetic: "/kiː/", meaning: "钥匙", usage: "a set of keys", grammar: "可数名词", examples: ["Where are my keys?"] },
+                    { word: "candy", phonetic: "/ˈkændi/", meaning: "糖果", usage: "eat candy", grammar: "可数名词", examples: ["Candy is sweet."] }
+                ]},
+                unit3: { name: "Unit 3 My friends", words: [
+                    { word: "strong", phonetic: "/strɔːŋ/", meaning: "强壮的", usage: "strong man", grammar: "形容词", examples: ["My father is strong."] },
+                    { word: "friendly", phonetic: "/ˈfrendli/", meaning: "友好的", usage: "friendly to", grammar: "形容词", examples: ["She is friendly."] },
+                    { word: "quiet", phonetic: "/ˈkwaɪət/", meaning: "安静的", usage: "be quiet", grammar: "形容词", examples: ["Please be quiet."] },
+                    { word: "tall", phonetic: "/tɔːl/", meaning: "高的", usage: "tall tree", grammar: "形容词", examples: ["He is tall."] },
+                    { word: "short", phonetic: "/ʃɔːrt/", meaning: "矮的", usage: "short boy", grammar: "形容词", examples: ["My brother is short."] },
+                    { word: "thin", phonetic: "/θɪn/", meaning: "瘦的", usage: "thin girl", grammar: "形容词", examples: ["She is thin."] },
+                    { word: "long hair", phonetic: "/lɔːŋ her/", meaning: "长发", usage: "has long hair", grammar: "名词短语", examples: ["She has long hair."] },
+                    { word: "short hair", phonetic: "/ʃɔːrt her/", meaning: "短发", usage: "has short hair", grammar: "名词短语", examples: ["He has short hair."] },
+                    { word: "brown shoes", phonetic: "/braʊn ʃuːz/", meaning: "棕色的鞋", usage: "wear brown shoes", grammar: "名词短语", examples: ["I like brown shoes."] },
+                    { word: "blue glasses", phonetic: "/bluː ˈɡlæsɪz/", meaning: "蓝色眼镜", usage: "wear blue glasses", grammar: "名词短语", examples: ["My grandpa has blue glasses."] }
+                ]},
+                unit4: { name: "Unit 4 My home", words: [
+                    { word: "bedroom", phonetic: "/ˈbedruːm/", meaning: "卧室", usage: "in the bedroom", grammar: "可数名词", examples: ["This is my bedroom."] },
+                    { word: "living room", phonetic: "/ˈlɪvɪŋ ruːm/", meaning: "客厅", usage: "in the living room", grammar: "名词短语", examples: ["We watch TV in the living room."] },
+                    { word: "study", phonetic: "/ˈstʌdi/", meaning: "书房", usage: "in the study", grammar: "可数名词", examples: ["My father is in the study."] },
+                    { word: "kitchen", phonetic: "/ˈkɪtʃɪn/", meaning: "厨房", usage: "in the kitchen", grammar: "可数名词", examples: ["Mom is in the kitchen."] },
+                    { word: "bathroom", phonetic: "/ˈbæθruːm/", meaning: "卫生间", usage: "in the bathroom", grammar: "可数名词", examples: ["I take a shower in the bathroom."] },
+                    { word: "bed", phonetic: "/bed/", meaning: "床", usage: "on the bed", grammar: "可数名词", examples: ["My cat is on the bed."] },
+                    { word: "phone", phonetic: "/foʊn/", meaning: "电话", usage: "answer the phone", grammar: "可数名词", examples: ["The phone is ringing."] },
+                    { word: "table", phonetic: "/ˈteɪbl/", meaning: "桌子", usage: "on the table", grammar: "可数名词", examples: ["The book is on the table."] },
+                    { word: "sofa", phonetic: "/ˈsoʊfə/", meaning: "沙发", usage: "on the sofa", grammar: "可数名词", examples: ["I sit on the sofa."] },
+                    { word: "fridge", phonetic: "/frɪdʒ/", meaning: "冰箱", usage: "in the fridge", grammar: "可数名词", examples: ["Milk is in the fridge."] }
+                ]},
+                unit5: { name: "Unit 5 Dinner's ready", words: [
+                    { word: "beef", phonetic: "/biːf/", meaning: "牛肉", usage: "eat beef", grammar: "不可数名词", examples: ["I like beef."] },
+                    { word: "chicken", phonetic: "/ˈtʃɪkɪn/", meaning: "鸡肉", usage: "fried chicken", grammar: "不可数名词", examples: ["Chicken is delicious."] },
+                    { word: "noodles", phonetic: "/ˈnuːdlz/", meaning: "面条", usage: "eat noodles", grammar: "复数名词", examples: ["I have noodles for lunch."] },
+                    { word: "soup", phonetic: "/suːp/", meaning: "汤", usage: "drink soup", grammar: "不可数名词", examples: ["The soup is hot."] },
+                    { word: "vegetable", phonetic: "/ˈvedʒtəbl/", meaning: "蔬菜", usage: "eat vegetables", grammar: "可数名词", examples: ["Eat more vegetables."] },
+                    { word: "chopsticks", phonetic: "/ˈtʃɑːpstɪks/", meaning: "筷子", usage: "use chopsticks", grammar: "复数名词", examples: ["I can use chopsticks."] },
+                    { word: "bowl", phonetic: "/boʊl/", meaning: "碗", usage: "a bowl of rice", grammar: "可数名词", examples: ["Pass me the bowl."] },
+                    { word: "fork", phonetic: "/fɔːrk/", meaning: "叉子", usage: "use a fork", grammar: "可数名词", examples: ["I eat with a fork."] },
+                    { word: "knife", phonetic: "/naɪf/", meaning: "刀", usage: "a knife and fork", grammar: "可数名词", examples: ["Be careful with the knife."] },
+                    { word: "spoon", phonetic: "/spuːn/", meaning: "勺子", usage: "use a spoon", grammar: "可数名词", examples: ["I eat soup with a spoon."] }
+                ]},
+                unit6: { name: "Unit 6 Meet my family", words: [
+                    { word: "family", phonetic: "/ˈfæməli/", meaning: "家庭", usage: "my family", grammar: "可数名词", examples: ["I love my family."] },
+                    { word: "parents", phonetic: "/ˈperənts/", meaning: "父母", usage: "my parents", grammar: "复数名词", examples: ["My parents are teachers."] },
+                    { word: "uncle", phonetic: "/ˈʌŋkl/", meaning: "叔叔/舅舅", usage: "my uncle", grammar: "可数名词", examples: ["My uncle is a doctor."] },
+                    { word: "aunt", phonetic: "/ænt/", meaning: "阿姨/姑姑", usage: "my aunt", grammar: "可数名词", examples: ["My aunt is kind."] },
+                    { word: "cousin", phonetic: "/ˈkʌzn/", meaning: "堂/表兄弟姐妹", usage: "my cousin", grammar: "可数名词", examples: ["I play with my cousin."] },
+                    { word: "baby brother", phonetic: "/ˈbeɪbi ˈbrʌðər/", meaning: "婴儿弟弟", usage: "little baby brother", grammar: "名词短语", examples: ["I have a baby brother."] },
+                    { word: "doctor", phonetic: "/ˈdɑːktər/", meaning: "医生", usage: "see a doctor", grammar: "可数名词", examples: ["My mother is a doctor."] },
+                    { word: "nurse", phonetic: "/nɜːrs/", meaning: "护士", usage: "work as a nurse", grammar: "可数名词", examples: ["She is a nurse."] },
+                    { word: "driver", phonetic: "/ˈdraɪvər/", meaning: "司机", usage: "bus driver", grammar: "可数名词", examples: ["My uncle is a bus driver."] },
+                    { word: "farmer", phonetic: "/ˈfɑːrmər/", meaning: "农民", usage: "work as a farmer", grammar: "可数名词", examples: ["The farmer grows vegetables."] },
+                    { word: "cook", phonetic: "/kʊk/", meaning: "厨师", usage: "a good cook", grammar: "可数名词", examples: ["My dad is a cook."] }
+                ]}
+            },
+            b: { // 下册
+                unit1: { name: "Unit 1 My school", words: [
+                    { word: "first floor", phonetic: "/fɜːrst flɔːr/", meaning: "一楼", usage: "on the first floor", grammar: "名词短语", examples: ["Our classroom is on the first floor."] },
+                    { word: "second floor", phonetic: "/ˈsekənd flɔːr/", meaning: "二楼", usage: "on the second floor", grammar: "名词短语", examples: ["The library is on the second floor."] },
+                    { word: "teachers' office", phonetic: "/ˈtiːtʃərz ˈɔːfɪs/", meaning: "教师办公室", usage: "in the teachers' office", grammar: "名词短语", examples: ["My teacher is in the teachers' office."] },
+                    { word: "library", phonetic: "/ˈlaɪbreri/", meaning: "图书馆", usage: "in the library", grammar: "可数名词", examples: ["I read books in the library."] },
+                    { word: "playground", phonetic: "/ˈpleɪɡraʊnd/", meaning: "操场", usage: "on the playground", grammar: "可数名词", examples: ["We play on the playground."] },
+                    { word: "computer room", phonetic: "/kəmˈpjuːtər ruːm/", meaning: "电脑室", usage: "in the computer room", grammar: "名词短语", examples: ["We have IT class in the computer room."] },
+                    { word: "art room", phonetic: "/ɑːrt ruːm/", meaning: "美术室", usage: "in the art room", grammar: "名词短语", examples: ["I draw in the art room."] },
+                    { word: "music room", phonetic: "/ˈmjuːzɪk ruːm/", meaning: "音乐室", usage: "in the music room", grammar: "名词短语", examples: ["We sing in the music room."] },
+                    { word: "gym", phonetic: "/dʒɪm/", meaning: "体育馆", usage: "in the gym", grammar: "可数名词", examples: ["We play basketball in the gym."] }
+                ]},
+                unit2: { name: "Unit 2 What time is it?", words: [
+                    { word: "breakfast", phonetic: "/ˈbrekfəst/", meaning: "早餐", usage: "have breakfast", grammar: "不可数名词", examples: ["I have breakfast at 7 o'clock."] },
+                    { word: "lunch", phonetic: "/lʌntʃ/", meaning: "午餐", usage: "have lunch", grammar: "不可数名词", examples: ["We have lunch at school."] },
+                    { word: "dinner", phonetic: "/ˈdɪnər/", meaning: "晚餐", usage: "have dinner", grammar: "不可数名词", examples: ["Family have dinner together."] },
+                    { word: "PE class", phonetic: "/ˌpiː ˈiː klæs/", meaning: "体育课", usage: "have PE class", grammar: "名词短语", examples: ["We run in PE class."] },
+                    { word: "music class", phonetic: "/ˈmjuːzɪk klæs/", meaning: "音乐课", usage: "have music class", grammar: "名词短语", examples: ["I sing in music class."] },
+                    { word: "English class", phonetic: "/ˈɪŋɡlɪʃ klæs/", meaning: "英语课", usage: "have English class", grammar: "名词短语", examples: ["We speak English in English class."] },
+                    { word: "get up", phonetic: "/ɡet ʌp/", meaning: "起床", usage: "get up early", grammar: "动词短语", examples: ["I get up at 6:30."] },
+                    { word: "go to school", phonetic: "/ɡoʊ tuː skuːl/", meaning: "去上学", usage: "go to school by bus", grammar: "动词短语", examples: ["I go to school at 7:30."] },
+                    { word: "go home", phonetic: "/ɡoʊ hoʊm/", meaning: "回家", usage: "go home after school", grammar: "动词短语", examples: ["I go home at 4:30."] },
+                    { word: "go to bed", phonetic: "/ɡoʊ tuː bed/", meaning: "上床睡觉", usage: "go to bed at 9:00", grammar: "动词短语", examples: ["I go to bed at 9 o'clock."] }
+                ]},
+                unit3: { name: "Unit 3 Weather", words: [
+                    { word: "cold", phonetic: "/koʊld/", meaning: "冷的", usage: "cold weather", grammar: "形容词", examples: ["It's cold in winter."] },
+                    { word: "cool", phonetic: "/kuːl/", meaning: "凉爽的", usage: "cool wind", grammar: "形容词", examples: ["It's cool in autumn."] },
+                    { word: "warm", phonetic: "/wɔːrm/", meaning: "温暖的", usage: "warm spring", grammar: "形容词", examples: ["It's warm in spring."] },
+                    { word: "hot", phonetic: "/hɑːt/", meaning: "热的", usage: "hot summer", grammar: "形容词", examples: ["It's hot in summer."] },
+                    { word: "sunny", phonetic: "/ˈsʌni/", meaning: "晴朗的", usage: "sunny day", grammar: "形容词", examples: ["It's sunny today."] },
+                    { word: "windy", phonetic: "/ˈwɪndi/", meaning: "有风的", usage: "windy weather", grammar: "形容词", examples: ["It's windy in March."] },
+                    { word: "cloudy", phonetic: "/ˈklaʊdi/", meaning: "多云的", usage: "cloudy sky", grammar: "形容词", examples: ["It's cloudy this morning."] },
+                    { word: "snowy", phonetic: "/ˈsnoʊi/", meaning: "下雪的", usage: "snowy day", grammar: "形容词", examples: ["It's snowy in winter."] },
+                    { word: "rainy", phonetic: "/ˈreɪni/", meaning: "下雨的", usage: "rainy day", grammar: "形容词", examples: ["It's rainy outside."] },
+                    { word: "outside", phonetic: "/ˌaʊtˈsaɪd/", meaning: "在外面", usage: "go outside", grammar: "副词", examples: ["Let's play outside."] },
+                    { word: "weather", phonetic: "/ˈweðər/", meaning: "天气", usage: "weather report", grammar: "不可数名词", examples: ["The weather is nice."] }
+                ]},
+                unit4: { name: "Unit 4 At the farm", words: [
+                    { word: "sheep", phonetic: "/ʃiːp/", meaning: "绵羊", usage: "a sheep", grammar: "可数名词(单复同)", examples: ["There are many sheep."] },
+                    { word: "hen", phonetic: "/hen/", meaning: "母鸡", usage: "a fat hen", grammar: "可数名词", examples: ["The hen lays eggs."] },
+                    { word: "cow", phonetic: "/kaʊ/", meaning: "奶牛", usage: "milk a cow", grammar: "可数名词", examples: ["Cows give milk."] },
+                    { word: "horse", phonetic: "/hɔːrs/", meaning: "马", usage: "ride a horse", grammar: "可数名词", examples: ["The horse runs fast."] },
+                    { word: "goat", phonetic: "/ɡoʊt/", meaning: "山羊", usage: "a white goat", grammar: "可数名词", examples: ["Goats like grass."] },
+                    { word: "lamb", phonetic: "/læm/", meaning: "小羊", usage: "a cute lamb", grammar: "可数名词", examples: ["The lamb is small."] },
+                    { word: "tomato", phonetic: "/təˈmeɪtoʊ/", meaning: "西红柿", usage: "eat tomatoes", grammar: "可数名词", examples: ["Tomatoes are red."] },
+                    { word: "potato", phonetic: "/pəˈteɪtoʊ/", meaning: "土豆", usage: "eat potatoes", grammar: "可数名词", examples: ["I like potatoes."] },
+                    { word: "carrot", phonetic: "/ˈkærət/", meaning: "胡萝卜", usage: "eat carrots", grammar: "可数名词", examples: ["Rabbits like carrots."] },
+                    { word: "green beans", phonetic: "/ɡriːn biːnz/", meaning: "四季豆", usage: "eat green beans", grammar: "复数名词", examples: ["Green beans are healthy."] }
+                ]},
+                unit5: { name: "Unit 5 My clothes", words: [
+                    { word: "pants", phonetic: "/pænts/", meaning: "裤子", usage: "wear pants", grammar: "复数名词", examples: ["These pants are blue."] },
+                    { word: "shorts", phonetic: "/ʃɔːrts/", meaning: "短裤", usage: "wear shorts", grammar: "复数名词", examples: ["I wear shorts in summer."] },
+                    { word: "dress", phonetic: "/dres/", meaning: "连衣裙", usage: "a pretty dress", grammar: "可数名词", examples: ["She wears a red dress."] },
+                    { word: "skirt", phonetic: "/skɜːrt/", meaning: "短裙", usage: "a pink skirt", grammar: "可数名词", examples: ["I like your skirt."] },
+                    { word: "coat", phonetic: "/koʊt/", meaning: "外套", usage: "wear a coat", grammar: "可数名词", examples: ["It's cold, wear your coat."] },
+                    { word: "sweater", phonetic: "/ˈswetər/", meaning: "毛衣", usage: "a warm sweater", grammar: "可数名词", examples: ["My grandma made this sweater."] },
+                    { word: "socks", phonetic: "/sɑːks/", meaning: "袜子", usage: "wear socks", grammar: "复数名词", examples: ["My socks are white."] },
+                    { word: "shoes", phonetic: "/ʃuːz/", meaning: "鞋", usage: "wear shoes", grammar: "复数名词", examples: ["These shoes are new."] },
+                    { word: "shirt", phonetic: "/ʃɜːrt/", meaning: "衬衫", usage: "a white shirt", grammar: "可数名词", examples: ["He wears a shirt."] },
+                    { word: "jacket", phonetic: "/ˈdʒækɪt/", meaning: "夹克", usage: "a blue jacket", grammar: "可数名词", examples: ["My jacket is cool."] }
+                ]},
+                unit6: { name: "Unit 6 Shopping", words: [
+                    { word: "glove", phonetic: "/ɡlʌv/", meaning: "手套", usage: "wear gloves", grammar: "可数名词", examples: ["Put on your gloves."] },
+                    { word: "scarf", phonetic: "/skɑːrf/", meaning: "围巾", usage: "wear a scarf", grammar: "可数名词", examples: ["My scarf is warm."] },
+                    { word: "umbrella", phonetic: "/ʌmˈbrelə/", meaning: "雨伞", usage: "hold an umbrella", grammar: "可数名词", examples: ["Take an umbrella, it's rainy."] },
+                    { word: "sunglasses", phonetic: "/ˈsʌnɡlæsɪz/", meaning: "太阳镜", usage: "wear sunglasses", grammar: "复数名词", examples: ["I wear sunglasses on sunny days."] },
+                    { word: "pretty", phonetic: "/ˈprɪti/", meaning: "漂亮的", usage: "pretty girl", grammar: "形容词", examples: ["That dress is pretty."] },
+                    { word: "expensive", phonetic: "/ɪkˈspensɪv/", meaning: "昂贵的", usage: "expensive car", grammar: "形容词", examples: ["This watch is expensive."] },
+                    { word: "cheap", phonetic: "/tʃiːp/", meaning: "便宜的", usage: "cheap price", grammar: "形容词", examples: ["This toy is cheap."] },
+                    { word: "nice", phonetic: "/naɪs/", meaning: "好的", usage: "nice to meet you", grammar: "形容词", examples: ["You are nice."] },
+                    { word: "size", phonetic: "/saɪz/", meaning: "尺码", usage: "what size", grammar: "名词", examples: ["What size are your shoes?"] },
+                    { word: "just", phonetic: "/dʒʌst/", meaning: "正好", usage: "just right", grammar: "副词", examples: ["This shirt is just right."] }
+                ]}
+            }
+        };
+
+        // ---------- 五年级数据 ----------
+        const grade5Data = {
+            a: { // 上册
+                unit1: { name: "Unit 1 What's he like?", words: [
+                    { word: "old", phonetic: "/oʊld/", meaning: "年老的", usage: "an old man", grammar: "形容词", examples: ["My grandfather is old."] },
+                    { word: "young", phonetic: "/jʌŋ/", meaning: "年轻的", usage: "a young teacher", grammar: "形容词", examples: ["Our teacher is young."] },
+                    { word: "funny", phonetic: "/ˈfʌni/", meaning: "滑稽的", usage: "a funny story", grammar: "形容词", examples: ["He is very funny."] },
+                    { word: "kind", phonetic: "/kaɪnd/", meaning: "和蔼的", usage: "a kind person", grammar: "形容词", examples: ["My mother is kind."] },
+                    { word: "strict", phonetic: "/strɪkt/", meaning: "严格的", usage: "strict teacher", grammar: "形容词", examples: ["Mr. Li is strict."] },
+                    { word: "polite", phonetic: "/pəˈlaɪt/", meaning: "有礼貌的", usage: "be polite", grammar: "形容词", examples: ["She is a polite girl."] },
+                    { word: "hard-working", phonetic: "/hɑːrd ˈwɜːrkɪŋ/", meaning: "工作努力的", usage: "hard-working student", grammar: "形容词", examples: ["He is hard-working."] },
+                    { word: "helpful", phonetic: "/ˈhelpfl/", meaning: "有帮助的", usage: "helpful boy", grammar: "形容词", examples: ["Tom is helpful."] },
+                    { word: "clever", phonetic: "/ˈklevər/", meaning: "聪明的", usage: "clever dog", grammar: "形容词", examples: ["The monkey is clever."] },
+                    { word: "shy", phonetic: "/ʃaɪ/", meaning: "害羞的", usage: "a shy girl", grammar: "形容词", examples: ["She is shy."] },
+                    { word: "know", phonetic: "/noʊ/", meaning: "知道", usage: "know about", grammar: "动词", examples: ["I know the answer."] },
+                    { word: "our", phonetic: "/ɑːr/", meaning: "我们的", usage: "our school", grammar: "形容词性物主代词", examples: ["This is our classroom."] },
+                    { word: "Ms.", phonetic: "/ˈmɪz/", meaning: "女士", usage: "Ms. Wang", grammar: "称呼", examples: ["Ms. Li is my teacher."] }
+                ]},
+                unit2: { name: "Unit 2 My week", words: [
+                    { word: "Monday", phonetic: "/ˈmʌndeɪ/", meaning: "星期一", usage: "on Monday", grammar: "名词", examples: ["I have math on Monday."] },
+                    { word: "Tuesday", phonetic: "/ˈtuːzdeɪ/", meaning: "星期二", usage: "on Tuesday", grammar: "名词", examples: ["We have PE on Tuesday."] },
+                    { word: "Wednesday", phonetic: "/ˈwenzdeɪ/", meaning: "星期三", usage: "on Wednesday", grammar: "名词", examples: ["It's Wednesday today."] },
+                    { word: "Thursday", phonetic: "/ˈθɜːrzdeɪ/", meaning: "星期四", usage: "on Thursday", grammar: "名词", examples: ["I play football on Thursday."] },
+                    { word: "Friday", phonetic: "/ˈfraɪdeɪ/", meaning: "星期五", usage: "on Friday", grammar: "名词", examples: ["Friday is my favorite day."] },
+                    { word: "Saturday", phonetic: "/ˈsætərdeɪ/", meaning: "星期六", usage: "on Saturday", grammar: "名词", examples: ["I go shopping on Saturday."] },
+                    { word: "Sunday", phonetic: "/ˈsʌndeɪ/", meaning: "星期日", usage: "on Sunday", grammar: "名词", examples: ["We have a picnic on Sunday."] },
+                    { word: "weekend", phonetic: "/ˈwiːkend/", meaning: "周末", usage: "on the weekend", grammar: "名词", examples: ["I like weekends."] },
+                    { word: "wash", phonetic: "/wɑːʃ/", meaning: "洗", usage: "wash clothes", grammar: "动词", examples: ["I wash my hands."] },
+                    { word: "watch", phonetic: "/wɑːtʃ/", meaning: "看", usage: "watch TV", grammar: "动词", examples: ["I watch TV in the evening."] },
+                    { word: "do", phonetic: "/duː/", meaning: "做", usage: "do homework", grammar: "动词", examples: ["I do my homework."] },
+                    { word: "read", phonetic: "/riːd/", meaning: "读", usage: "read books", grammar: "动词", examples: ["I like to read."] },
+                    { word: "play", phonetic: "/pleɪ/", meaning: "玩", usage: "play football", grammar: "动词", examples: ["Let's play together."] },
+                    { word: "cooking", phonetic: "/ˈkʊkɪŋ/", meaning: "烹饪", usage: "like cooking", grammar: "名词/动名词", examples: ["My mom likes cooking."] },
+                    { word: "often", phonetic: "/ˈɔːfn/", meaning: "经常", usage: "often go", grammar: "频度副词", examples: ["I often read books."] },
+                    { word: "park", phonetic: "/pɑːrk/", meaning: "公园", usage: "in the park", grammar: "可数名词", examples: ["Let's go to the park."] }
+                ]},
+                unit3: { name: "Unit 3 What would you like?", words: [
+                    { word: "sandwich", phonetic: "/ˈsænwɪtʃ/", meaning: "三明治", usage: "a chicken sandwich", grammar: "可数名词", examples: ["I'd like a sandwich."] },
+                    { word: "salad", phonetic: "/ˈsæləd/", meaning: "沙拉", usage: "fruit salad", grammar: "不可数名词", examples: ["I like salad."] },
+                    { word: "hamburger", phonetic: "/ˈhæmbɜːrɡər/", meaning: "汉堡包", usage: "a hamburger", grammar: "可数名词", examples: ["Children like hamburgers."] },
+                    { word: "ice cream", phonetic: "/aɪs kriːm/", meaning: "冰淇淋", usage: "eat ice cream", grammar: "不可数名词", examples: ["Ice cream is sweet."] },
+                    { word: "tea", phonetic: "/tiː/", meaning: "茶", usage: "drink tea", grammar: "不可数名词", examples: ["I like green tea."] },
+                    { word: "fresh", phonetic: "/freʃ/", meaning: "新鲜的", usage: "fresh fruit", grammar: "形容词", examples: ["The apples are fresh."] },
+                    { word: "healthy", phonetic: "/ˈhelθi/", meaning: "健康的", usage: "healthy food", grammar: "形容词", examples: ["Eat healthy food."] },
+                    { word: "delicious", phonetic: "/dɪˈlɪʃəs/", meaning: "美味的", usage: "delicious food", grammar: "形容词", examples: ["The cake is delicious."] },
+                    { word: "hot", phonetic: "/hɑːt/", meaning: "辣的；热的", usage: "hot food", grammar: "形容词", examples: ["The soup is hot."] },
+                    { word: "sweet", phonetic: "/swiːt/", meaning: "甜的", usage: "sweet candy", grammar: "形容词", examples: ["I like sweet food."] },
+                    { word: "drink", phonetic: "/drɪŋk/", meaning: "喝", usage: "drink water", grammar: "动词/名词", examples: ["Drink some water."] },
+                    { word: "thirsty", phonetic: "/ˈθɜːrsti/", meaning: "口渴的", usage: "feel thirsty", grammar: "形容词", examples: ["I'm thirsty."] },
+                    { word: "favourite", phonetic: "/ˈfeɪvərɪt/", meaning: "最喜欢的", usage: "my favourite", grammar: "形容词", examples: ["My favourite food is pizza."] },
+                    { word: "food", phonetic: "/fuːd/", meaning: "食物", usage: "Chinese food", grammar: "不可数名词", examples: ["I like Chinese food."] }
+                ]},
+                unit4: { name: "Unit 4 What can you do?", words: [
+                    { word: "sing", phonetic: "/sɪŋ/", meaning: "唱", usage: "sing a song", grammar: "动词", examples: ["I can sing."] },
+                    { word: "song", phonetic: "/sɔːŋ/", meaning: "歌曲", usage: "English song", grammar: "可数名词", examples: ["Let's sing a song."] },
+                    { word: "dance", phonetic: "/dæns/", meaning: "跳舞", usage: "can dance", grammar: "动词", examples: ["She can dance."] },
+                    { word: "draw", phonetic: "/drɔː/", meaning: "画", usage: "draw a picture", grammar: "动词", examples: ["I like to draw."] },
+                    { word: "cook", phonetic: "/kʊk/", meaning: "烹饪", usage: "cook dinner", grammar: "动词", examples: ["My dad can cook."] },
+                    { word: "swim", phonetic: "/swɪm/", meaning: "游泳", usage: "go swimming", grammar: "动词", examples: ["I can swim."] },
+                    { word: "play basketball", phonetic: "/pleɪ ˈbæskɪtbɔːl/", meaning: "打篮球", usage: "play basketball", grammar: "动词短语", examples: ["We play basketball after school."] },
+                    { word: "ping-pong", phonetic: "/ˈpɪŋ pɑːŋ/", meaning: "乒乓球", usage: "play ping-pong", grammar: "名词", examples: ["I like ping-pong."] },
+                    { word: "speak English", phonetic: "/spiːk ˈɪŋɡlɪʃ/", meaning: "说英语", usage: "speak English well", grammar: "动词短语", examples: ["He can speak English."] },
+                    { word: "party", phonetic: "/ˈpɑːrti/", meaning: "聚会", usage: "birthday party", grammar: "可数名词", examples: ["We have a party."] },
+                    { word: "next", phonetic: "/nekst/", meaning: "下一个", usage: "next week", grammar: "形容词", examples: ["See you next week."] },
+                    { word: "wonderful", phonetic: "/ˈwʌndərfl/", meaning: "极好的", usage: "wonderful idea", grammar: "形容词", examples: ["That's wonderful!"] },
+                    { word: "learn", phonetic: "/lɜːrn/", meaning: "学习", usage: "learn English", grammar: "动词", examples: ["I want to learn."] },
+                    { word: "any", phonetic: "/ˈeni/", meaning: "任何", usage: "any questions", grammar: "形容词", examples: ["Do you have any questions?"] },
+                    { word: "problem", phonetic: "/ˈprɑːbləm/", meaning: "问题", usage: "no problem", grammar: "可数名词", examples: ["No problem!"] }
+                ]},
+                unit5: { name: "Unit 5 There is a big bed", words: [
+                    { word: "clock", phonetic: "/klɑːk/", meaning: "时钟", usage: "on the clock", grammar: "可数名词", examples: ["The clock is on the wall."] },
+                    { word: "plant", phonetic: "/plænt/", meaning: "植物", usage: "water the plant", grammar: "可数名词", examples: ["I have a plant."] },
+                    { word: "bottle", phonetic: "/ˈbɑːtl/", meaning: "瓶子", usage: "water bottle", grammar: "可数名词", examples: ["My water bottle is blue."] },
+                    { word: "bike", phonetic: "/baɪk/", meaning: "自行车", usage: "ride a bike", grammar: "可数名词", examples: ["I go to school by bike."] },
+                    { word: "photo", phonetic: "/ˈfoʊtoʊ/", meaning: "照片", usage: "take a photo", grammar: "可数名词", examples: ["This is a photo of my family."] },
+                    { word: "front", phonetic: "/frʌnt/", meaning: "前面", usage: "in front of", grammar: "名词", examples: ["He is in front of me."] },
+                    { word: "between", phonetic: "/bɪˈtwiːn/", meaning: "在...之间", usage: "between A and B", grammar: "介词", examples: ["The ball is between the chairs."] },
+                    { word: "above", phonetic: "/əˈbʌv/", meaning: "在...上面", usage: "above the desk", grammar: "介词", examples: ["The light is above the desk."] },
+                    { word: "beside", phonetic: "/bɪˈsaɪd/", meaning: "在...旁边", usage: "beside the bed", grammar: "介词", examples: ["The chair is beside the desk."] },
+                    { word: "behind", phonetic: "/bɪˈhaɪnd/", meaning: "在...后面", usage: "behind the door", grammar: "介词", examples: ["The cat is behind the door."] },
+                    { word: "there", phonetic: "/ðer/", meaning: "那里", usage: "there is/are", grammar: "副词", examples: ["There is a book on the desk."] },
+                    { word: "grandparent", phonetic: "/ˈɡrænperənt/", meaning: "祖父母", usage: "my grandparents", grammar: "可数名词", examples: ["I love my grandparents."] },
+                    { word: "their", phonetic: "/ðer/", meaning: "他们的", usage: "their house", grammar: "形容词性物主代词", examples: ["This is their classroom."] },
+                    { word: "house", phonetic: "/haʊs/", meaning: "房子", usage: "big house", grammar: "可数名词", examples: ["They live in a big house."] },
+                    { word: "lots of", phonetic: "/lɑːts əv/", meaning: "大量", usage: "lots of books", grammar: "短语", examples: ["I have lots of friends."] },
+                    { word: "flower", phonetic: "/ˈflaʊər/", meaning: "花", usage: "beautiful flowers", grammar: "可数名词", examples: ["The flowers are beautiful."] }
+                ]},
+                unit6: { name: "Unit 6 In a nature park", words: [
+                    { word: "forest", phonetic: "/ˈfɔːrɪst/", meaning: "森林", usage: "in the forest", grammar: "可数名词", examples: ["There are trees in the forest."] },
+                    { word: "river", phonetic: "/ˈrɪvər/", meaning: "河流", usage: "in the river", grammar: "可数名词", examples: ["We swim in the river."] },
+                    { word: "lake", phonetic: "/leɪk/", meaning: "湖泊", usage: "by the lake", grammar: "可数名词", examples: ["There is a lake in the park."] },
+                    { word: "mountain", phonetic: "/ˈmaʊntn/", meaning: "山", usage: "climb the mountain", grammar: "可数名词", examples: ["The mountain is high."] },
+                    { word: "hill", phonetic: "/hɪl/", meaning: "小山", usage: "on the hill", grammar: "可数名词", examples: ["We can see the hill."] },
+                    { word: "tree", phonetic: "/triː/", meaning: "树", usage: "climb a tree", grammar: "可数名词", examples: ["The tree is tall."] },
+                    { word: "bridge", phonetic: "/brɪdʒ/", meaning: "桥", usage: "cross the bridge", grammar: "可数名词", examples: ["There is a bridge over the river."] },
+                    { word: "building", phonetic: "/ˈbɪldɪŋ/", meaning: "建筑物", usage: "tall building", grammar: "可数名词", examples: ["That is a tall building."] },
+                    { word: "village", phonetic: "/ˈvɪlɪdʒ/", meaning: "村庄", usage: "in the village", grammar: "可数名词", examples: ["My grandparents live in a village."] },
+                    { word: "house", phonetic: "/haʊs/", meaning: "房子", usage: "small house", grammar: "可数名词", examples: ["They have a small house."] },
+                    { word: "boating", phonetic: "/ˈboʊtɪŋ/", meaning: "划船", usage: "go boating", grammar: "动名词", examples: ["Let's go boating on the lake."] },
+                    { word: "rabbit", phonetic: "/ˈræbɪt/", meaning: "兔子", usage: "a white rabbit", grammar: "可数名词", examples: ["The rabbit is cute."] },
+                    { word: "duck", phonetic: "/dʌk/", meaning: "鸭子", usage: "a yellow duck", grammar: "可数名词", examples: ["Ducks swim in the river."] }
+                ]}
+            },
+            b: { // 下册
+                unit1: { name: "Unit 1 My day", words: [
+                    { word: "morning", phonetic: "/ˈmɔːrnɪŋ/", meaning: "早晨", usage: "in the morning", grammar: "名词", examples: ["I get up at 6 in the morning."] },
+                    { word: "afternoon", phonetic: "/ˌæftərˈnuːn/", meaning: "下午", usage: "in the afternoon", grammar: "名词", examples: ["We have PE in the afternoon."] },
+                    { word: "evening", phonetic: "/ˈiːvnɪŋ/", meaning: "傍晚", usage: "in the evening", grammar: "名词", examples: ["I do homework in the evening."] },
+                    { word: "night", phonetic: "/naɪt/", meaning: "夜晚", usage: "at night", grammar: "名词", examples: ["I go to bed at 9 at night."] },
+                    { word: "get up", phonetic: "/ɡet ʌp/", meaning: "起床", usage: "get up early", grammar: "动词短语", examples: ["I get up at 6:30."] },
+                    { word: "eat breakfast", phonetic: "/iːt ˈbrekfəst/", meaning: "吃早餐", usage: "eat breakfast at 7", grammar: "动词短语", examples: ["I eat breakfast at 7 o'clock."] },
+                    { word: "eat lunch", phonetic: "/iːt lʌntʃ/", meaning: "吃午餐", usage: "eat lunch at school", grammar: "动词短语", examples: ["We eat lunch at school."] },
+                    { word: "eat dinner", phonetic: "/iːt ˈdɪnər/", meaning: "吃晚餐", usage: "eat dinner with family", grammar: "动词短语", examples: ["I eat dinner with my family."] },
+                    { word: "go to school", phonetic: "/ɡoʊ tuː skuːl/", meaning: "去上学", usage: "go to school by bus", grammar: "动词短语", examples: ["I go to school at 7:30."] },
+                    { word: "go home", phonetic: "/ɡoʊ hoʊm/", meaning: "回家", usage: "go home at 4:30", grammar: "动词短语", examples: ["I go home at 4:30."] },
+                    { word: "go to bed", phonetic: "/ɡoʊ tuː bed/", meaning: "上床睡觉", usage: "go to bed at 9:00", grammar: "动词短语", examples: ["I go to bed at 9 o'clock."] },
+                    { word: "usually", phonetic: "/ˈjuːʒuəli/", meaning: "通常", usage: "usually do", grammar: "频度副词", examples: ["I usually get up at 6."] },
+                    { word: "sometimes", phonetic: "/ˈsʌmtaɪmz/", meaning: "有时", usage: "sometimes go", grammar: "频度副词", examples: ["I sometimes watch TV."] }
+                ]},
+                unit2: { name: "Unit 2 My favourite season", words: [
+                    { word: "spring", phonetic: "/sprɪŋ/", meaning: "春天", usage: "in spring", grammar: "名词", examples: ["I like spring."] },
+                    { word: "summer", phonetic: "/ˈsʌmər/", meaning: "夏天", usage: "in summer", grammar: "名词", examples: ["Summer is hot."] },
+                    { word: "autumn", phonetic: "/ˈɔːtəm/", meaning: "秋天", usage: "in autumn", grammar: "名词", examples: ["Leaves fall in autumn."] },
+                    { word: "winter", phonetic: "/ˈwɪntər/", meaning: "冬天", usage: "in winter", grammar: "名词", examples: ["I like winter because of snow."] },
+                    { word: "season", phonetic: "/ˈsiːzn/", meaning: "季节", usage: "four seasons", grammar: "可数名词", examples: ["There are four seasons."] },
+                    { word: "which", phonetic: "/wɪtʃ/", meaning: "哪一个", usage: "which one", grammar: "疑问代词", examples: ["Which season do you like best?"] },
+                    { word: "best", phonetic: "/best/", meaning: "最", usage: "like best", grammar: "副词", examples: ["I like spring best."] },
+                    { word: "snow", phonetic: "/snoʊ/", meaning: "雪", usage: "heavy snow", grammar: "不可数名词", examples: ["It snows in winter."] },
+                    { word: "rain", phonetic: "/reɪn/", meaning: "雨", usage: "heavy rain", grammar: "不可数名词", examples: ["Rain is good for plants."] },
+                    { word: "wind", phonetic: "/wɪnd/", meaning: "风", usage: "strong wind", grammar: "不可数名词", examples: ["The wind blows."] },
+                    { word: "warm", phonetic: "/wɔːrm/", meaning: "温暖的", usage: "warm day", grammar: "形容词", examples: ["Spring is warm."] },
+                    { word: "hot", phonetic: "/hɑːt/", meaning: "热的", usage: "hot weather", grammar: "形容词", examples: ["Summer is hot."] },
+                    { word: "cool", phonetic: "/kuːl/", meaning: "凉爽的", usage: "cool wind", grammar: "形容词", examples: ["Autumn is cool."] },
+                    { word: "cold", phonetic: "/koʊld/", meaning: "冷的", usage: "cold day", grammar: "形容词", examples: ["Winter is cold."] }
+                ]},
+                unit3: { name: "Unit 3 My school calendar", words: [
+                    { word: "January", phonetic: "/ˈdʒænjueri/", meaning: "一月", usage: "in January", grammar: "名词", examples: ["New Year's Day is in January."] },
+                    { word: "February", phonetic: "/ˈfebrueri/", meaning: "二月", usage: "in February", grammar: "名词", examples: ["Spring Festival is often in February."] },
+                    { word: "March", phonetic: "/mɑːrtʃ/", meaning: "三月", usage: "in March", grammar: "名词", examples: ["March comes after February."] },
+                    { word: "April", phonetic: "/ˈeɪprəl/", meaning: "四月", usage: "in April", grammar: "名词", examples: ["April is spring."] },
+                    { word: "May", phonetic: "/meɪ/", meaning: "五月", usage: "in May", grammar: "名词", examples: ["May is a nice month."] },
+                    { word: "June", phonetic: "/dʒuːn/", meaning: "六月", usage: "in June", grammar: "名词", examples: ["June 1st is Children's Day."] },
+                    { word: "July", phonetic: "/dʒuˈlaɪ/", meaning: "七月", usage: "in July", grammar: "名词", examples: ["July is summer."] },
+                    { word: "August", phonetic: "/ɔːˈɡʌst/", meaning: "八月", usage: "in August", grammar: "名词", examples: ["August is hot."] },
+                    { word: "September", phonetic: "/sepˈtembər/", meaning: "九月", usage: "in September", grammar: "名词", examples: ["School starts in September."] },
+                    { word: "October", phonetic: "/ɑːkˈtoʊbər/", meaning: "十月", usage: "in October", grammar: "名词", examples: ["October has Halloween."] },
+                    { word: "November", phonetic: "/noʊˈvembər/", meaning: "十一月", usage: "in November", grammar: "名词", examples: ["November is autumn."] },
+                    { word: "December", phonetic: "/dɪˈsembər/", meaning: "十二月", usage: "in December", grammar: "名词", examples: ["December has Christmas."] }
+                ]},
+                unit4: { name: "Unit 4 When is the art show?", words: [
+                    { word: "first", phonetic: "/fɜːrst/", meaning: "第一", usage: "first day", grammar: "序数词", examples: ["May 1st is the first day of May."] },
+                    { word: "second", phonetic: "/ˈsekənd/", meaning: "第二", usage: "second floor", grammar: "序数词", examples: ["June 2nd is the second day."] },
+                    { word: "third", phonetic: "/θɜːrd/", meaning: "第三", usage: "third time", grammar: "序数词", examples: ["July 3rd is his birthday."] },
+                    { word: "fourth", phonetic: "/fɔːrθ/", meaning: "第四", usage: "fourth of July", grammar: "序数词", examples: ["August 4th is a special day."] },
+                    { word: "fifth", phonetic: "/fɪfθ/", meaning: "第五", usage: "fifth day", grammar: "序数词", examples: ["September 5th is Monday."] },
+                    { word: "sixth", phonetic: "/sɪksθ/", meaning: "第六", usage: "sixth month", grammar: "序数词", examples: ["October 6th is a sunny day."] },
+                    { word: "twelfth", phonetic: "/twelfθ/", meaning: "第十二", usage: "twelfth night", grammar: "序数词", examples: ["December 12th is my birthday."] },
+                    { word: "birthday", phonetic: "/ˈbɜːrθdeɪ/", meaning: "生日", usage: "happy birthday", grammar: "可数名词", examples: ["My birthday is in May."] },
+                    { word: "party", phonetic: "/ˈpɑːrti/", meaning: "聚会", usage: "birthday party", grammar: "可数名词", examples: ["We have a party."] },
+                    { word: "test", phonetic: "/test/", meaning: "测试", usage: "math test", grammar: "可数名词", examples: ["We have a test on Friday."] },
+                    { word: "trip", phonetic: "/trɪp/", meaning: "旅行", usage: "school trip", grammar: "可数名词", examples: ["We have a school trip in April."] }
+                ]},
+                unit5: { name: "Unit 5 Whose dog is it?", words: [
+                    { word: "mine", phonetic: "/maɪn/", meaning: "我的", usage: "It's mine.", grammar: "名词性物主代词", examples: ["This book is mine."] },
+                    { word: "yours", phonetic: "/jɔːrz/", meaning: "你的", usage: "It's yours.", grammar: "名词性物主代词", examples: ["Is this pen yours?"] },
+                    { word: "his", phonetic: "/hɪz/", meaning: "他的", usage: "It's his.", grammar: "名词性物主代词", examples: ["That bag is his."] },
+                    { word: "hers", phonetic: "/hɜːrz/", meaning: "她的", usage: "It's hers.", grammar: "名词性物主代词", examples: ["The pink dress is hers."] },
+                    { word: "theirs", phonetic: "/ðerz/", meaning: "他们的", usage: "It's theirs.", grammar: "名词性物主代词", examples: ["Those books are theirs."] },
+                    { word: "ours", phonetic: "/ɑːrz/", meaning: "我们的", usage: "It's ours.", grammar: "名词性物主代词", examples: ["This classroom is ours."] },
+                    { word: "climbing", phonetic: "/ˈklaɪmɪŋ/", meaning: "攀爬", usage: "be climbing", grammar: "动名词", examples: ["The cat is climbing the tree."] },
+                    { word: "eating", phonetic: "/ˈiːtɪŋ/", meaning: "吃", usage: "be eating", grammar: "动名词", examples: ["The dog is eating."] },
+                    { word: "playing", phonetic: "/ˈpleɪɪŋ/", meaning: "玩", usage: "be playing", grammar: "动名词", examples: ["The children are playing."] },
+                    { word: "jumping", phonetic: "/ˈdʒʌmpɪŋ/", meaning: "跳", usage: "be jumping", grammar: "动名词", examples: ["The rabbit is jumping."] },
+                    { word: "sleeping", phonetic: "/ˈsliːpɪŋ/", meaning: "睡觉", usage: "be sleeping", grammar: "动名词", examples: ["The baby is sleeping."] },
+                    { word: "drinking", phonetic: "/ˈdrɪŋkɪŋ/", meaning: "喝", usage: "be drinking", grammar: "动名词", examples: ["He is drinking water."] }
+                ]},
+                unit6: { name: "Unit 6 Work quietly!", words: [
+                    { word: "quiet", phonetic: "/ˈkwaɪət/", meaning: "安静的", usage: "be quiet", grammar: "形容词", examples: ["Please be quiet."] },
+                    { word: "quietly", phonetic: "/ˈkwaɪətli/", meaning: "安静地", usage: "work quietly", grammar: "副词", examples: ["They are working quietly."] },
+                    { word: "loud", phonetic: "/laʊd/", meaning: "大声的", usage: "loud music", grammar: "形容词", examples: ["Don't be loud."] },
+                    { word: "loudly", phonetic: "/ˈlaʊdli/", meaning: "大声地", usage: "talk loudly", grammar: "副词", examples: ["Don't talk loudly."] },
+                    { word: "keep", phonetic: "/kiːp/", meaning: "保持", usage: "keep quiet", grammar: "动词", examples: ["Keep your desk clean."] },
+                    { word: "right", phonetic: "/raɪt/", meaning: "正确的", usage: "right answer", grammar: "形容词", examples: ["That's right."] },
+                    { word: "left", phonetic: "/left/", meaning: "左边", usage: "turn left", grammar: "名词/形容词", examples: ["Turn left at the corner."] },
+                    { word: "turn", phonetic: "/tɜːrn/", meaning: "转弯", usage: "turn right", grammar: "动词", examples: ["Please turn left."] },
+                    { word: "take turns", phonetic: "/teɪk tɜːrnz/", meaning: "轮流", usage: "take turns doing", grammar: "动词短语", examples: ["Take turns to play."] },
+                    { word: "talk", phonetic: "/tɔːk/", meaning: "说话", usage: "talk quietly", grammar: "动词", examples: ["Don't talk in class."] },
+                    { word: "work", phonetic: "/wɜːrk/", meaning: "工作", usage: "work hard", grammar: "动词/名词", examples: ["They work in the library."] }
+                ]}
+            }
+        };
+
+        // ---------- 六年级数据 ----------
+        const grade6Data = {
+            a: { // 上册
+                unit1: { name: "Unit 1 How can I get there?", words: [
+                    { word: "science museum", phonetic: "/ˈsaɪəns mjuˈziːəm/", meaning: "科学博物馆", usage: "visit the science museum", grammar: "名词短语", examples: ["Let's go to the science museum."] },
+                    { word: "post office", phonetic: "/poʊst ˈɔːfɪs/", meaning: "邮局", usage: "at the post office", grammar: "名词短语", examples: ["I need to go to the post office."] },
+                    { word: "bookstore", phonetic: "/ˈbʊkstɔːr/", meaning: "书店", usage: "in the bookstore", grammar: "可数名词", examples: ["I buy books at the bookstore."] },
+                    { word: "cinema", phonetic: "/ˈsɪnəmə/", meaning: "电影院", usage: "go to the cinema", grammar: "可数名词", examples: ["Let's go to the cinema."] },
+                    { word: "hospital", phonetic: "/ˈhɑːspɪtl/", meaning: "医院", usage: "in the hospital", grammar: "可数名词", examples: ["My mother works in a hospital."] },
+                    { word: "crossing", phonetic: "/ˈkrɔːsɪŋ/", meaning: "十字路口", usage: "at the crossing", grammar: "可数名词", examples: ["Turn left at the crossing."] },
+                    { word: "turn", phonetic: "/tɜːrn/", meaning: "转弯", usage: "turn left/right", grammar: "动词", examples: ["Turn right at the corner."] },
+                    { word: "left", phonetic: "/left/", meaning: "左边", usage: "on the left", grammar: "名词/形容词", examples: ["The school is on the left."] },
+                    { word: "right", phonetic: "/raɪt/", meaning: "右边", usage: "on the right", grammar: "名词/形容词", examples: ["Turn right."] },
+                    { word: "straight", phonetic: "/streɪt/", meaning: "笔直地", usage: "go straight", grammar: "副词", examples: ["Go straight ahead."] },
+                    { word: "map", phonetic: "/mæp/", meaning: "地图", usage: "on the map", grammar: "可数名词", examples: ["Look at the map."] },
+                    { word: "compass", phonetic: "/ˈkʌmpəs/", meaning: "指南针", usage: "use a compass", grammar: "可数名词", examples: ["A compass helps you find direction."] },
+                    { word: "GPS", phonetic: "/dʒiː piː es/", meaning: "全球定位系统", usage: "use GPS", grammar: "缩写", examples: ["My dad uses GPS in the car."] }
+                ]},
+                unit2: { name: "Unit 2 Ways to go to school", words: [
+                    { word: "by", phonetic: "/baɪ/", meaning: "乘", usage: "by bus", grammar: "介词", examples: ["I go to school by bus."] },
+                    { word: "bus", phonetic: "/bʌs/", meaning: "公共汽车", usage: "take a bus", grammar: "可数名词", examples: ["The bus is coming."] },
+                    { word: "train", phonetic: "/treɪn/", meaning: "火车", usage: "by train", grammar: "可数名词", examples: ["We go to Beijing by train."] },
+                    { word: "plane", phonetic: "/pleɪn/", meaning: "飞机", usage: "by plane", grammar: "可数名词", examples: ["It's fast to go by plane."] },
+                    { word: "ship", phonetic: "/ʃɪp/", meaning: "船", usage: "by ship", grammar: "可数名词", examples: ["They travel by ship."] },
+                    { word: "subway", phonetic: "/ˈsʌbweɪ/", meaning: "地铁", usage: "by subway", grammar: "可数名词", examples: ["I take the subway to school."] },
+                    { word: "taxi", phonetic: "/ˈtæksi/", meaning: "出租车", usage: "take a taxi", grammar: "可数名词", examples: ["We'll take a taxi to the airport."] },
+                    { word: "bike", phonetic: "/baɪk/", meaning: "自行车", usage: "by bike", grammar: "可数名词", examples: ["I go to school by bike."] },
+                    { word: "walk", phonetic: "/wɔːk/", meaning: "步行", usage: "walk to school", grammar: "动词/名词", examples: ["I walk to school every day."] },
+                    { word: "traffic light", phonetic: "/ˈtræfɪk laɪt/", meaning: "交通信号灯", usage: "at the traffic lights", grammar: "名词短语", examples: ["Stop at the red traffic light."] },
+                    { word: "traffic rule", phonetic: "/ˈtræfɪk ruːl/", meaning: "交通规则", usage: "follow the traffic rules", grammar: "名词短语", examples: ["We must obey traffic rules."] },
+                    { word: "stop", phonetic: "/stɑːp/", meaning: "停", usage: "stop at a red light", grammar: "动词", examples: ["Stop and wait."] },
+                    { word: "wait", phonetic: "/weɪt/", meaning: "等", usage: "wait for", grammar: "动词", examples: ["Wait for the green light."] }
+                ]},
+                unit3: { name: "Unit 3 My weekend plan", words: [
+                    { word: "visit", phonetic: "/ˈvɪzɪt/", meaning: "拜访", usage: "visit my grandparents", grammar: "动词", examples: ["I will visit my grandparents."] },
+                    { word: "film", phonetic: "/fɪlm/", meaning: "电影", usage: "see a film", grammar: "可数名词", examples: ["Let's see a film."] },
+                    { word: "trip", phonetic: "/trɪp/", meaning: "旅行", usage: "take a trip", grammar: "可数名词", examples: ["We are going on a trip."] },
+                    { word: "supermarket", phonetic: "/ˈsuːpərmɑːrkɪt/", meaning: "超市", usage: "go to the supermarket", grammar: "可数名词", examples: ["I go shopping at the supermarket."] },
+                    { word: "evening", phonetic: "/ˈiːvnɪŋ/", meaning: "晚上", usage: "in the evening", grammar: "名词", examples: ["We will have dinner in the evening."] },
+                    { word: "tonight", phonetic: "/təˈnaɪt/", meaning: "今晚", usage: "tonight's plan", grammar: "副词/名词", examples: ["What are you doing tonight?"] },
+                    { word: "tomorrow", phonetic: "/təˈmɑːroʊ/", meaning: "明天", usage: "tomorrow morning", grammar: "副词/名词", examples: ["I will go tomorrow."] },
+                    { word: "next week", phonetic: "/nekst wiːk/", meaning: "下周", usage: "next week's plan", grammar: "名词短语", examples: ["We have a test next week."] },
+                    { word: "dictionary", phonetic: "/ˈdɪkʃəneri/", meaning: "词典", usage: "look up in the dictionary", grammar: "可数名词", examples: ["I use a dictionary to learn new words."] },
+                    { word: "comic book", phonetic: "/ˈkɑːmɪk bʊk/", meaning: "漫画书", usage: "read comic books", grammar: "名词短语", examples: ["He likes reading comic books."] },
+                    { word: "word book", phonetic: "/wɜːrd bʊk/", meaning: "单词书", usage: "buy a word book", grammar: "名词短语", examples: ["I need a word book for English."] },
+                    { word: "postcard", phonetic: "/ˈpoʊstkɑːrd/", meaning: "明信片", usage: "send a postcard", grammar: "可数名词", examples: ["I got a postcard from my friend."] },
+                    { word: "space", phonetic: "/speɪs/", meaning: "太空", usage: "space travel", grammar: "不可数名词", examples: ["I dream of space travel."] },
+                    { word: "moon", phonetic: "/muːn/", meaning: "月亮", usage: "on the moon", grammar: "名词", examples: ["People can't live on the moon."] }
+                ]},
+                unit4: { name: "Unit 4 I have a pen pal", words: [
+                    { word: "pen pal", phonetic: "/pen pæl/", meaning: "笔友", usage: "write to pen pal", grammar: "名词短语", examples: ["I have a pen pal in Australia."] },
+                    { word: "hobby", phonetic: "/ˈhɑːbi/", meaning: "爱好", usage: "my hobby", grammar: "可数名词", examples: ["My hobby is reading."] },
+                    { word: "reading", phonetic: "/ˈriːdɪŋ/", meaning: "阅读", usage: "like reading", grammar: "动名词", examples: ["He enjoys reading."] },
+                    { word: "listening to music", phonetic: "/ˈlɪsənɪŋ tə ˈmjuːzɪk/", meaning: "听音乐", usage: "like listening to music", grammar: "动名词短语", examples: ["I like listening to music."] },
+                    { word: "playing sports", phonetic: "/ˈpleɪɪŋ spɔːrts/", meaning: "做运动", usage: "enjoy playing sports", grammar: "动名词短语", examples: ["She loves playing sports."] },
+                    { word: "doing kung fu", phonetic: "/ˈduːɪŋ kʌŋ fuː/", meaning: "练功夫", usage: "like doing kung fu", grammar: "动名词短语", examples: ["He is good at doing kung fu."] },
+                    { word: "singing", phonetic: "/ˈsɪŋɪŋ/", meaning: "唱歌", usage: "like singing", grammar: "动名词", examples: ["My sister likes singing."] },
+                    { word: "dancing", phonetic: "/ˈdænsɪŋ/", meaning: "跳舞", usage: "enjoy dancing", grammar: "动名词", examples: ["They are dancing."] },
+                    { word: "cooking", phonetic: "/ˈkʊkɪŋ/", meaning: "烹饪", usage: "like cooking", grammar: "动名词", examples: ["My mom loves cooking."] },
+                    { word: "studying", phonetic: "/ˈstʌdiɪŋ/", meaning: "学习", usage: "like studying", grammar: "动名词", examples: ["She is studying English."] },
+                    { word: "live", phonetic: "/lɪv/", meaning: "居住", usage: "live in", grammar: "动词", examples: ["I live in Beijing."] },
+                    { word: "teach", phonetic: "/tiːtʃ/", meaning: "教", usage: "teach English", grammar: "动词", examples: ["He teaches math."] },
+                    { word: "go", phonetic: "/ɡoʊ/", meaning: "去", usage: "go to school", grammar: "动词", examples: ["We go to the park."] }
+                ]},
+                unit5: { name: "Unit 5 What does he do?", words: [
+                    { word: "factory worker", phonetic: "/ˈfæktri ˈwɜːrkər/", meaning: "工厂工人", usage: "work as a factory worker", grammar: "名词短语", examples: ["My uncle is a factory worker."] },
+                    { word: "postman", phonetic: "/ˈpoʊstmən/", meaning: "邮递员", usage: "a postman delivers letters", grammar: "可数名词", examples: ["The postman comes every day."] },
+                    { word: "businessman", phonetic: "/ˈbɪznəsmæn/", meaning: "商人", usage: "a successful businessman", grammar: "可数名词", examples: ["My father is a businessman."] },
+                    { word: "police officer", phonetic: "/pəˈliːs ˈɔːfɪsər/", meaning: "警察", usage: "a police officer", grammar: "名词短语", examples: ["Police officers keep us safe."] },
+                    { word: "fisherman", phonetic: "/ˈfɪʃərmən/", meaning: "渔民", usage: "a fisherman catches fish", grammar: "可数名词", examples: ["The fisherman goes out to sea."] },
+                    { word: "scientist", phonetic: "/ˈsaɪəntɪst/", meaning: "科学家", usage: "a scientist does experiments", grammar: "可数名词", examples: ["Einstein was a great scientist."] },
+                    { word: "pilot", phonetic: "/ˈpaɪlət/", meaning: "飞行员", usage: "a pilot flies a plane", grammar: "可数名词", examples: ["My dream is to be a pilot."] },
+                    { word: "coach", phonetic: "/koʊtʃ/", meaning: "教练", usage: "a football coach", grammar: "可数名词", examples: ["Our coach is very strict."] },
+                    { word: "country", phonetic: "/ˈkʌntri/", meaning: "国家", usage: "different countries", grammar: "可数名词", examples: ["China is a big country."] },
+                    { word: "head teacher", phonetic: "/hed ˈtiːtʃər/", meaning: "校长", usage: "the head teacher of our school", grammar: "名词短语", examples: ["The head teacher gave a speech."] },
+                    { word: "sea", phonetic: "/siː/", meaning: "大海", usage: "by the sea", grammar: "名词", examples: ["I like swimming in the sea."] },
+                    { word: "stay", phonetic: "/steɪ/", meaning: "保持；停留", usage: "stay healthy", grammar: "动词", examples: ["We should stay healthy."] }
+                ]},
+                unit6: { name: "Unit 6 How do you feel?", words: [
+                    { word: "angry", phonetic: "/ˈæŋɡri/", meaning: "生气的", usage: "feel angry", grammar: "形容词", examples: ["He is angry because his toy is broken."] },
+                    { word: "afraid", phonetic: "/əˈfreɪd/", meaning: "害怕的", usage: "be afraid of", grammar: "形容词", examples: ["I am afraid of the dark."] },
+                    { word: "sad", phonetic: "/sæd/", meaning: "难过的", usage: "feel sad", grammar: "形容词", examples: ["She felt sad when her friend left."] },
+                    { word: "worried", phonetic: "/ˈwɜːrid/", meaning: "担心的", usage: "be worried about", grammar: "形容词", examples: ["I'm worried about the test."] },
+                    { word: "happy", phonetic: "/ˈhæpi/", meaning: "开心的", usage: "feel happy", grammar: "形容词", examples: ["We are happy to see you."] },
+                    { word: "see a doctor", phonetic: "/siː ə ˈdɑːktər/", meaning: "看医生", usage: "go to see a doctor", grammar: "动词短语", examples: ["You should see a doctor."] },
+                    { word: "wear", phonetic: "/wer/", meaning: "穿", usage: "wear warm clothes", grammar: "动词", examples: ["Wear your coat."] },
+                    { word: "take a deep breath", phonetic: "/teɪk ə diːp breθ/", meaning: "深呼吸", usage: "take a deep breath and relax", grammar: "动词短语", examples: ["Take a deep breath when you feel nervous."] },
+                    { word: "count to ten", phonetic: "/kaʊnt tə ten/", meaning: "数到十", usage: "count to ten calmly", grammar: "动词短语", examples: ["Count to ten before you speak."] },
+                    { word: "ill", phonetic: "/ɪl/", meaning: "生病的", usage: "feel ill", grammar: "形容词", examples: ["He is ill today."] },
+                    { word: "wrong", phonetic: "/rɔːŋ/", meaning: "有毛病的", usage: "What's wrong?", grammar: "形容词", examples: ["What's wrong with you?"] },
+                    { word: "should", phonetic: "/ʃʊd/", meaning: "应该", usage: "should do", grammar: "情态动词", examples: ["You should see a doctor."] }
+                ]}
+            },
+            b: { // 下册
+                unit1: { name: "Unit 1 How tall are you?", words: [
+                    { word: "tall", phonetic: "/tɔːl/", meaning: "高的", usage: "taller than", grammar: "形容词", examples: ["He is tall."] },
+                    { word: "taller", phonetic: "/ˈtɔːlər/", meaning: "更高的", usage: "than", grammar: "形容词比较级", examples: ["I am taller than my brother."] },
+                    { word: "short", phonetic: "/ʃɔːrt/", meaning: "短的；矮的", usage: "shorter", grammar: "形容词", examples: ["She is short."] },
+                    { word: "shorter", phonetic: "/ˈʃɔːrtər/", meaning: "更矮的", usage: "than", grammar: "形容词比较级", examples: ["He is shorter than me."] },
+                    { word: "long", phonetic: "/lɔːŋ/", meaning: "长的", usage: "longer than", grammar: "形容词", examples: ["My hair is long."] },
+                    { word: "longer", phonetic: "/ˈlɔːŋɡər/", meaning: "更长的", usage: "than", grammar: "形容词比较级", examples: ["Your pencil is longer than mine."] },
+                    { word: "thin", phonetic: "/θɪn/", meaning: "瘦的", usage: "thinner than", grammar: "形容词", examples: ["She is thin."] },
+                    { word: "thinner", phonetic: "/ˈθɪnər/", meaning: "更瘦的", usage: "than", grammar: "形容词比较级", examples: ["He is thinner than his friend."] },
+                    { word: "heavy", phonetic: "/ˈhevi/", meaning: "重的", usage: "heavier than", grammar: "形容词", examples: ["This box is heavy."] },
+                    { word: "heavier", phonetic: "/ˈheviər/", meaning: "更重的", usage: "than", grammar: "形容词比较级", examples: ["The elephant is heavier than the tiger."] },
+                    { word: "big", phonetic: "/bɪɡ/", meaning: "大的", usage: "bigger than", grammar: "形容词", examples: ["Our house is big."] },
+                    { word: "bigger", phonetic: "/ˈbɪɡər/", meaning: "更大的", usage: "than", grammar: "形容词比较级", examples: ["China is bigger than Japan."] },
+                    { word: "small", phonetic: "/smɔːl/", meaning: "小的", usage: "smaller than", grammar: "形容词", examples: ["This cat is small."] },
+                    { word: "smaller", phonetic: "/ˈsmɔːlər/", meaning: "更小的", usage: "than", grammar: "形容词比较级", examples: ["My shoes are smaller than yours."] },
+                    { word: "kilogram", phonetic: "/ˈkɪləɡræm/", meaning: "千克", usage: "three kilograms", grammar: "可数名词", examples: ["I weigh 30 kilograms."] }
+                ]},
+                unit2: { name: "Unit 2 Last weekend", words: [
+                    { word: "cleaned", phonetic: "/kliːnd/", meaning: "打扫（过去式）", usage: "cleaned the room", grammar: "动词过去式", examples: ["I cleaned my room last Sunday."] },
+                    { word: "washed", phonetic: "/wɑːʃt/", meaning: "洗（过去式）", usage: "washed clothes", grammar: "动词过去式", examples: ["She washed her hands."] },
+                    { word: "watched", phonetic: "/wɑːtʃt/", meaning: "看（过去式）", usage: "watched TV", grammar: "动词过去式", examples: ["We watched a movie."] },
+                    { word: "stayed", phonetic: "/steɪd/", meaning: "停留（过去式）", usage: "stayed at home", grammar: "动词过去式", examples: ["I stayed at home yesterday."] },
+                    { word: "visited", phonetic: "/ˈvɪzɪtɪd/", meaning: "拜访（过去式）", usage: "visited grandparents", grammar: "动词过去式", examples: ["We visited the museum."] },
+                    { word: "played", phonetic: "/pleɪd/", meaning: "玩（过去式）", usage: "played football", grammar: "动词过去式", examples: ["They played in the park."] },
+                    { word: "did", phonetic: "/dɪd/", meaning: "做（过去式）", usage: "did homework", grammar: "动词过去式", examples: ["I did my homework."] },
+                    { word: "went", phonetic: "/went/", meaning: "去（过去式）", usage: "went to school", grammar: "动词过去式", examples: ["She went to Beijing."] },
+                    { word: "had", phonetic: "/hæd/", meaning: "有（过去式）", usage: "had a cold", grammar: "动词过去式", examples: ["I had a cold last week."] },
+                    { word: "slept", phonetic: "/slept/", meaning: "睡觉（过去式）", usage: "slept early", grammar: "动词过去式", examples: ["I slept well."] },
+                    { word: "read", phonetic: "/red/", meaning: "读（过去式）", usage: "read a book", grammar: "动词过去式", examples: ["He read a storybook."] },
+                    { word: "saw", phonetic: "/sɔː/", meaning: "看见（过去式）", usage: "saw a film", grammar: "动词过去式", examples: ["We saw a film."] },
+                    { word: "last", phonetic: "/læst/", meaning: "上一个", usage: "last weekend", grammar: "形容词", examples: ["I went swimming last weekend."] }
+                ]},
+                unit3: { name: "Unit 3 Where did you go?", words: [
+                    { word: "went", phonetic: "/went/", meaning: "去（过去式）", usage: "went to", grammar: "动词过去式", examples: ["I went to the park."] },
+                    { word: "camp", phonetic: "/kæmp/", meaning: "露营", usage: "go camping", grammar: "动词/名词", examples: ["We went camping last summer."] },
+                    { word: "fish", phonetic: "/fɪʃ/", meaning: "钓鱼", usage: "go fishing", grammar: "动词", examples: ["He went fishing with his dad."] },
+                    { word: "ride", phonetic: "/raɪd/", meaning: "骑", usage: "rode (过去式)", grammar: "动词", examples: ["I rode a horse."] },
+                    { word: "hurt", phonetic: "/hɜːrt/", meaning: "受伤", usage: "hurt my leg", grammar: "动词", examples: ["I fell and hurt my knee."] },
+                    { word: "ate", phonetic: "/eɪt/", meaning: "吃（过去式）", usage: "ate fresh food", grammar: "动词过去式", examples: ["We ate delicious food."] },
+                    { word: "took", phonetic: "/tʊk/", meaning: "拍；花费（过去式）", usage: "took pictures", grammar: "动词过去式", examples: ["I took many photos."] },
+                    { word: "bought", phonetic: "/bɔːt/", meaning: "买（过去式）", usage: "bought gifts", grammar: "动词过去式", examples: ["She bought a dress."] },
+                    { word: "gift", phonetic: "/ɡɪft/", meaning: "礼物", usage: "birthday gift", grammar: "可数名词", examples: ["I got a gift from my friend."] },
+                    { word: "beach", phonetic: "/biːtʃ/", meaning: "海滩", usage: "on the beach", grammar: "可数名词", examples: ["We played on the beach."] },
+                    { word: "basket", phonetic: "/ˈbæskɪt/", meaning: "篮子", usage: "a basket of fruit", grammar: "可数名词", examples: ["She carried a basket."] },
+                    { word: "part", phonetic: "/pɑːrt/", meaning: "角色；部分", usage: "play a part", grammar: "可数名词", examples: ["He played a part in the play."] },
+                    { word: "licked", phonetic: "/lɪkt/", meaning: "舔（过去式）", usage: "licked the ice cream", grammar: "动词过去式", examples: ["The dog licked my hand."] },
+                    { word: "laughed", phonetic: "/læft/", meaning: "笑（过去式）", usage: "laughed happily", grammar: "动词过去式", examples: ["We laughed at the joke."] }
+                ]},
+                unit4: { name: "Unit 4 Then and now", words: [
+                    { word: "before", phonetic: "/bɪˈfɔːr/", meaning: "以前", usage: "before now", grammar: "介词/连词", examples: ["Before, I was short."] },
+                    { word: "now", phonetic: "/naʊ/", meaning: "现在", usage: "right now", grammar: "副词", examples: ["Now I am tall."] },
+                    { word: "different", phonetic: "/ˈdɪfrənt/", meaning: "不同的", usage: "different from", grammar: "形容词", examples: ["Things are different now."] },
+                    { word: "active", phonetic: "/ˈæktɪv/", meaning: "活跃的", usage: "an active boy", grammar: "形容词", examples: ["He is very active in class."] },
+                    { word: "quiet", phonetic: "/ˈkwaɪət/", meaning: "安静的", usage: "a quiet girl", grammar: "形容词", examples: ["She was quiet before."] },
+                    { word: "easy", phonetic: "/ˈiːzi/", meaning: "容易的", usage: "easy to do", grammar: "形容词", examples: ["This is an easy question."] },
+                    { word: "hard", phonetic: "/hɑːrd/", meaning: "困难的；努力的", usage: "work hard", grammar: "形容词/副词", examples: ["It's a hard job."] },
+                    { word: "were", phonetic: "/wɜːr/", meaning: "是（过去式）", usage: "they were", grammar: "be动词过去式", examples: ["We were good friends."] },
+                    { word: "was", phonetic: "/wʌz/", meaning: "是（过去式）", usage: "I was", grammar: "be动词过去式", examples: ["I was at home yesterday."] },
+                    { word: "thought", phonetic: "/θɔːt/", meaning: "想（过去式）", usage: "thought about", grammar: "动词过去式", examples: ["I thought it was easy."] },
+                    { word: "felt", phonetic: "/felt/", meaning: "感觉（过去式）", usage: "felt happy", grammar: "动词过去式", examples: ["I felt sad."] },
+                    { word: "dream", phonetic: "/driːm/", meaning: "梦", usage: "had a dream", grammar: "可数名词", examples: ["I had a strange dream last night."] }
+                ]}
+            }
+        };
+
+        // 合并所有年级数据
+        const allGradesData = {
+            grade3: grade3Data,
+            grade4: grade4Data,
+            grade5: grade5Data,
+            grade6: grade6Data
+        };
+
+        // ==================== 闯关进度存储 ====================
+        let progress = JSON.parse(localStorage.getItem('wordProgress_all_free')) || {};
+
+        function saveProgress() {
+            localStorage.setItem('wordProgress_all_free', JSON.stringify(progress));
+        }
+
+        function getWordKey(word, unitId) {
+            return `${currentGrade}_${currentSemester}_${unitId}_${word}`;
+        }
+
+        function countTotalStars() {
+            return Object.values(progress).filter(v => v === true).length;
+        }
+
+        // ==================== 玩家姓名 ====================
+        let playerName = localStorage.getItem('playerName') || '';
+
+        // ==================== 当前状态 ====================
+        let currentGrade = 'grade3'; // 默认三年级
+        let currentSemester = 'a';    // 默认上册
+        let currentUnit = 'unit1';    // 默认第一单元
+
+        // ==================== DOM 元素 ====================
+        const registerOverlay = document.getElementById('registerOverlay');
+        const mainApp = document.getElementById('mainApp');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const startBtn = document.getElementById('startBtn');
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const praiseToast = document.getElementById('praiseToast');
+        const gradeBtns = document.querySelectorAll('.grade-btn');
+        const semesterBtns = document.querySelectorAll('.semester-btn');
+        const unitNav = document.getElementById('unitNav');
+        const unitNameSpan = document.getElementById('unitName');
+        const wordCountSpan = document.getElementById('wordCount');
+        const cardGrid = document.getElementById('wordCardGrid');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalInner = document.getElementById('modalInner');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const totalStarsSpan = document.getElementById('totalStars');
+
+        // ==================== 注册逻辑 ====================
+        if (playerName) {
+            registerOverlay.style.display = 'none';
+            mainApp.style.display = 'block';
+            showWelcome(playerName);
+        } else {
+            registerOverlay.style.display = 'flex';
+            mainApp.style.display = 'none';
+        }
+
+        startBtn.addEventListener('click', () => {
+            const name = playerNameInput.value.trim();
+            if (name === '') {
+                alert('请输入你的名字～');
+                return;
+            }
+            playerName = name;
+            localStorage.setItem('playerName', playerName);
+            registerOverlay.style.opacity = '0';
+            setTimeout(() => {
+                registerOverlay.style.display = 'none';
+                mainApp.style.display = 'block';
+                showWelcome(playerName);
+            }, 500);
+        });
+
+        function showWelcome(name) {
+            welcomeMessage.innerText = `${name} 来到单词世界！`;
+            welcomeOverlay.style.opacity = '1';
+            welcomeOverlay.style.pointerEvents = 'auto';
+            setTimeout(() => {
+                welcomeOverlay.style.opacity = '0';
+                welcomeOverlay.style.pointerEvents = 'none';
+            }, 2000);
+        }
+
+        function showPraise(level) {
+            const messages = ['🎉 太棒了！', '🌟 你真是个小天才！', '✨ 哇！超级厉害！'];
+            const message = messages[level - 1] || messages[0];
+            praiseToast.innerText = `${playerName} ${message}`;
+            praiseToast.style.opacity = '1';
+            setTimeout(() => {
+                praiseToast.style.opacity = '0';
+            }, 1500);
+        }
+
+        // ==================== 渲染单元导航 ====================
+        function renderUnitNav() {
+            const gradeData = allGradesData[currentGrade];
+            if (!gradeData) return;
+            const semesterData = gradeData[currentSemester];
+            if (!semesterData) return;
+
+            let html = '';
+            let unitIndex = 1;
+            while (semesterData[`unit${unitIndex}`]) {
+                const unit = semesterData[`unit${unitIndex}`];
+                const activeClass = currentUnit === `unit${unitIndex}` ? 'active' : '';
+                html += `<button class="unit-btn ${activeClass}" data-unit="unit${unitIndex}">${unit.name}</button>`;
+                unitIndex++;
+            }
+            unitNav.innerHTML = html;
+
+            document.querySelectorAll('.unit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentUnit = btn.dataset.unit;
+                    renderWordCards();
+                });
+            });
+        }
+
+        // ==================== 渲染单词卡片 ====================
+        function renderWordCards() {
+            const gradeData = allGradesData[currentGrade];
+            if (!gradeData) return;
+            const semesterData = gradeData[currentSemester];
+            if (!semesterData) return;
+            const unitData = semesterData[currentUnit];
+            if (!unitData) return;
+
+            const gradeNames = { grade3: '三年级', grade4: '四年级', grade5: '五年级', grade6: '六年级' };
+            const semesterName = currentSemester === 'a' ? '上册' : '下册';
+            unitNameSpan.textContent = `${gradeNames[currentGrade]} ${semesterName} ${unitData.name}`;
+            wordCountSpan.textContent = unitData.words.length;
+
+            let html = '';
+            unitData.words.forEach(word => {
+                const wordKey = getWordKey(word.word, currentUnit);
+                const completed = progress[wordKey] || false;
+                const starIcon = completed ? '<div class="star-icon">⭐</div>' : '';
+                html += `
+                    <div class="word-card ${completed ? 'completed' : ''}" data-word='${JSON.stringify(word).replace(/'/g, "&apos;")}' data-unit="${currentUnit}">
+                        <div class="word">${word.word}</div>
+                        <div class="meaning">${word.meaning}</div>
+                        ${starIcon}
+                    </div>
+                `;
+            });
+            cardGrid.innerHTML = html;
+
+            document.querySelectorAll('.word-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const wordData = JSON.parse(card.dataset.word.replace(/&apos;/g, "'"));
+                    showModal(wordData);
+                });
+            });
+
+            totalStarsSpan.innerText = countTotalStars();
+        }
+
+        // ==================== 闯关模态框 ====================
+        function showModal(word) {
+            const wordKey = getWordKey(word.word, currentUnit);
+            const completed = progress[wordKey] || false;
+            const examplesHtml = word.examples.map(ex => `<li>“${ex}”</li>`).join('');
+
+            const meaningOptions = generateMeaningOptions(word);
+            const wordOptions = generateWordOptions(word);
+            const spellingQuestion = generateSpellingQuestion(word);
+
+            let gameHtml = '';
+            if (!completed) {
+                gameHtml = `
+                    <div class="game-area" id="gameArea">
+                        <div class="game-title">🎮 闯关挑战 <span style="font-size:1.2rem;">(答对三关得⭐)</span></div>
+                        <div id="gameContent">
+                            <div class="question" id="q1">
+                                <p>🔰 第一关：选出 <strong>${word.word}</strong> 的正确中文意思</p>
+                                <div class="options" id="q1Options">
+                                    ${meaningOptions.map(opt => `<button class="option-btn" data-value="${opt}">${opt}</button>`).join('')}
+                                </div>
+                                <div class="feedback" id="q1Feedback"></div>
+                            </div>
+                            <div class="question" id="q2" style="display:none;">
+                                <p>🔰 第二关：哪个单词是 <strong>“${word.meaning}”</strong> ？</p>
+                                <div class="options" id="q2Options">
+                                    ${wordOptions.map(opt => `<button class="option-btn" data-value="${opt}">${opt}</button>`).join('')}
+                                </div>
+                                <div class="feedback" id="q2Feedback"></div>
+                            </div>
+                            <div class="question" id="q3" style="display:none;">
+                                <p>🔰 第三关：拼写填空  <strong>${spellingQuestion.display}</strong></p>
+                                <div class="options" id="q3Options">
+                                    ${spellingQuestion.options.map(opt => `<button class="option-btn" data-value="${opt}">${opt}</button>`).join('')}
+                                </div>
+                                <div class="feedback" id="q3Feedback"></div>
+                            </div>
+                            <button class="next-btn" id="nextGameBtn" disabled>下一关 →</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                gameHtml = `
+                    <div class="game-area" style="background:#fde047;">
+                        <div class="game-title">⭐ 已完成闯关 ⭐</div>
+                        <p style="font-size:1.5rem; text-align:center;">你真棒！已经收集了这颗星星✨</p>
+                    </div>
+                `;
+            }
+
+            modalInner.innerHTML = `
+                <div>
+                    <div class="modal-word-area">
+                        <span class="modal-word">${word.word}</span>
+                        <span class="modal-phonetic">${word.phonetic}</span>
+                        <button class="sound-btn" id="speakBtn">🔊 发音</button>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h4>📖 基本释义</h4>
+                        <p>${word.meaning}</p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h4>💡 用法</h4>
+                        <p>${word.usage}</p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h4>📚 语法深析</h4>
+                        <p>${word.grammar}</p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h4>✍️ 例句</h4>
+                        <ul style="list-style: none;">${examplesHtml}</ul>
+                    </div>
+
+                    ${gameHtml}
+                </div>
+            `;
+
+            modalOverlay.style.display = 'flex';
+
+            const speakBtn = document.getElementById('speakBtn');
+            if (speakBtn) {
+                speakBtn.addEventListener('click', () => {
+                    const utterance = new SpeechSynthesisUtterance(word.word);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+
+            if (completed) return;
+
+            // 游戏状态
+            let currentLevel = 1;
+            let q1Correct = false;
+            let q2Correct = false;
+            let q3Correct = false;
+
+            const q1Div = document.getElementById('q1');
+            const q2Div = document.getElementById('q2');
+            const q3Div = document.getElementById('q3');
+            const nextBtn = document.getElementById('nextGameBtn');
+            const q1Options = document.querySelectorAll('#q1Options .option-btn');
+            const q2Options = document.querySelectorAll('#q2Options .option-btn');
+            const q3Options = document.querySelectorAll('#q3Options .option-btn');
+            const q1Feedback = document.getElementById('q1Feedback');
+            const q2Feedback = document.getElementById('q2Feedback');
+            const q3Feedback = document.getElementById('q3Feedback');
+
+            // 第一关
+            q1Options.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (q1Correct) return;
+                    const selected = btn.dataset.value;
+                    if (selected === word.meaning) {
+                        q1Correct = true;
+                        q1Feedback.innerText = '✅ 答对了！';
+                        q1Feedback.style.background = '#bbf7d0';
+                        q1Options.forEach(b => b.disabled = true);
+                        nextBtn.disabled = false;
+                        showPraise(1);
+                    } else {
+                        q1Feedback.innerText = '❌ 不对哦，再试试看';
+                        q1Feedback.style.background = '#fecaca';
+                    }
+                });
+            });
+
+            // 下一关
+            nextBtn.addEventListener('click', () => {
+                if (currentLevel === 1 && q1Correct) {
+                    q1Div.style.display = 'none';
+                    q2Div.style.display = 'block';
+                    nextBtn.disabled = true;
+                    currentLevel = 2;
+                } else if (currentLevel === 2 && q2Correct) {
+                    q2Div.style.display = 'none';
+                    q3Div.style.display = 'block';
+                    nextBtn.disabled = true;
+                    currentLevel = 3;
+                } else if (currentLevel === 3 && q3Correct) {
+                    progress[wordKey] = true;
+                    saveProgress();
+                    totalStarsSpan.innerText = countTotalStars();
+                    renderWordCards();
+                    document.getElementById('gameArea').innerHTML = `
+                        <div class="game-complete">
+                            🎉 恭喜！你完成了所有关卡！获得星星 ⭐
+                        </div>
+                    `;
+                }
+            });
+
+            // 第二关
+            q2Options.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (q2Correct) return;
+                    const selected = btn.dataset.value;
+                    if (selected === word.word) {
+                        q2Correct = true;
+                        q2Feedback.innerText = '✅ 答对了！';
+                        q2Feedback.style.background = '#bbf7d0';
+                        q2Options.forEach(b => b.disabled = true);
+                        nextBtn.disabled = false;
+                        showPraise(2);
+                    } else {
+                        q2Feedback.innerText = '❌ 不对哦，再试试看';
+                        q2Feedback.style.background = '#fecaca';
+                    }
+                });
+            });
+
+            // 第三关
+            q3Options.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (q3Correct) return;
+                    const selected = btn.dataset.value;
+                    if (selected === spellingQuestion.correctLetter) {
+                        q3Correct = true;
+                        q3Feedback.innerText = '✅ 答对了！';
+                        q3Feedback.style.background = '#bbf7d0';
+                        q3Options.forEach(b => b.disabled = true);
+                        nextBtn.disabled = false;
+                        showPraise(3);
+                    } else {
+                        q3Feedback.innerText = '❌ 不对哦，再试试看';
+                        q3Feedback.style.background = '#fecaca';
+                    }
+                });
+            });
+        }
+
+        // ==================== 辅助函数（生成选项）====================
+        function generateMeaningOptions(word) {
+            const semesterData = allGradesData[currentGrade][currentSemester];
+            const unitData = semesterData[currentUnit];
+            const otherMeanings = unitData.words.filter(w => w.word !== word.word).map(w => w.meaning);
+            let options = [word.meaning];
+            while (options.length < 4 && otherMeanings.length > 0) {
+                const randomIndex = Math.floor(Math.random() * otherMeanings.length);
+                const candidate = otherMeanings[randomIndex];
+                if (!options.includes(candidate)) {
+                    options.push(candidate);
+                }
+                otherMeanings.splice(randomIndex, 1);
+            }
+            while (options.length < 4) {
+                options.push('苹果');
+            }
+            return shuffleArray(options);
+        }
+
+        function generateWordOptions(word) {
+            const semesterData = allGradesData[currentGrade][currentSemester];
+            const unitData = semesterData[currentUnit];
+            const otherWords = unitData.words.filter(w => w.word !== word.word).map(w => w.word);
+            let options = [word.word];
+            while (options.length < 4 && otherWords.length > 0) {
+                const randomIndex = Math.floor(Math.random() * otherWords.length);
+                const candidate = otherWords[randomIndex];
+                if (!options.includes(candidate)) {
+                    options.push(candidate);
+                }
+                otherWords.splice(randomIndex, 1);
+            }
+            while (options.length < 4) {
+                options.push('cat');
+            }
+            return shuffleArray(options);
+        }
+
+        function generateSpellingQuestion(word) {
+            const w = word.word;
+            if (w.length <= 1) return { display: w, options: [w], correctLetter: w };
+            const pos = Math.floor(Math.random() * (w.length - 1)) + 1;
+            const missing = w[pos];
+            const display = w.slice(0, pos) + ' _ ' + w.slice(pos + 1);
+            const letters = 'abcdefghijklmnopqrstuvwxyz';
+            let options = [missing];
+            while (options.length < 3) {
+                const randomLetter = letters[Math.floor(Math.random() * 26)];
+                if (!options.includes(randomLetter)) {
+                    options.push(randomLetter);
+                }
+            }
+            return {
+                display: display,
+                options: shuffleArray(options),
+                correctLetter: missing
+            };
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ==================== 关闭模态框 ====================
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // ==================== 年级切换 ====================
+        gradeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetGrade = btn.dataset.grade;
+                gradeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentGrade = targetGrade;
+                currentUnit = 'unit1';
+                renderUnitNav();
+                renderWordCards();
+            });
+        });
+
+        // ==================== 学期切换 ====================
+        semesterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetSemester = btn.dataset.semester;
+                semesterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSemester = targetSemester;
+                currentUnit = 'unit1';
+                renderUnitNav();
+                renderWordCards();
+            });
+        });
+
+        // ==================== 初始化 ====================
+        // 默认激活三年级和上册
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            if (btn.dataset.grade === currentGrade) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        document.querySelectorAll('.semester-btn').forEach(btn => {
+            if (btn.dataset.semester === currentSemester) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        renderUnitNav();
+        renderWordCards();
+    </script>
+</body>
+</html>
